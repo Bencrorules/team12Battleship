@@ -5,7 +5,10 @@ class Ship
 {
     public:
     Ship(int length);
+    bool isSank();
+
+    private:
     int** shipCoords;
     bool sank;
-}
-#endif;
+};
+#endif
