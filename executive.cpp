@@ -3,5 +3,5 @@
 
 void Executive::run()
 {
-    myGame.boardBuild();
+    myGame.playGame();
 }
