@@ -1,10 +1,10 @@
-prog: main.o executive.o game.o
-	g++ -std=c++17 -g -Wall main.o executive.o game.o -o prog
+prog: main.o executive.o game.o player.o ship.o
+	g++ -std=c++17 -g -Wall main.o executive.o game.o player.o ship.o -o prog
 
-main.o: main.cpp executive.h 
+main.o: main.cpp executive.h game.h player.h ship.h
 	g++ -std=c++17 -g -Wall -c main.cpp
 
-executive.o: executive.h executive.cpp game.h player.h
+executive.o: executive.h executive.cpp
 	g++ -std=c++17 -g -Wall -c executive.cpp
 
 game.o: game.h game.cpp
@@ -12,6 +12,9 @@ game.o: game.h game.cpp
 
 player.o: player.h player.cpp
 	g++ -std=c++17 -g -Wall -c player.cpp
+
+ship.o: ship.h ship.cpp
+		g++ -std=c++17 -g -Wall -c ship.cpp
 
 clean:
 	rm *.o prog
