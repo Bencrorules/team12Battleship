@@ -10,3 +10,8 @@ Ship::Ship(int length)
     }
     sank = false;
 }
+
+bool Ship::isSank()
+{
+    return sank;
+}
