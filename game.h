@@ -10,9 +10,10 @@ class Game
     void makeBoard();
     void printBoard();
     void obtainShips();
+    void labels();
     int** board;
-    int row;
-    int col;
+    int row = 11;
+    int col = 11;
     int shipAmount;
     Player* player1;
     Player* player2;
