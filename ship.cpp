@@ -23,7 +23,18 @@ void Ship::setXCoord(int spotNumber, char value)
     shipCoords[spotNumber][0] = value;
 }
 
+char Ship::getXCoord(int spotNumber)
+{
+    return shipCoords[spotNumber][0];
+}
+
 void Ship::setYCoord(int spotNumber, int value)
 {
     shipCoords[spotNumber][1] = value;
 }
+
+int Ship::getYCoord(int spotNumber)
+{
+    return shipCoords[spotNumber][1];
+}
+

@@ -8,5 +8,5 @@ Player::Player(int amountShips)
 
 void Player::addShip(int shipNumber, Ship* ship)
 {
-
+    
 }
