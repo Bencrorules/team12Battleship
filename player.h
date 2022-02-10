@@ -6,6 +6,9 @@ class Player
 {
     public:
     Player(int amountShips);
+    void addShip(int shipNumber, Ship* ship);
+
+    private:
     Ship** ships;
 };
 #endif
