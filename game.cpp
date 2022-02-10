@@ -30,7 +30,7 @@ void Game::makeBoard()
     labels();
 }
 void Game::labels(){
-    
+
     int val = 0;
     for (int i = 0; i < row; i++)
     {
@@ -47,7 +47,7 @@ void Game::labels(){
             board[0][9] = 'I';
             board[0][10] = 'J';
             board[i][0] = val;
-            
+
         }
         val++;
     }
@@ -93,5 +93,111 @@ void Game::playGame()
 
 void Game::obtainShips()
 {
+    char tempxLetter;
+    int tempyNumber;
+    Ship* tempShip;
     printBoard();
+    std::cout << std::endl;
+    do
+    {
+        std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): ";
+        std::cin >> tempxLetter;
+        if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
+        {
+            std::cout << "Must enter letter between A and J." << std::endl;
+        }
+    } while((int)tempxLetter < 65 || (int)tempxLetter > 74);
+    do
+    {
+        std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
+        std::cin >> tempyNumber;
+        if (tempyNumber < 1 || tempyNumber > 10)
+        {
+            std::cout << "Must enter number between 1 and 10." << std::endl;
+        }
+    } while(tempyNumber < 1 || tempyNumber > 10);
+    tempShip = new Ship(1);
+    tempShip->setXCoord(0, tempxLetter);
+    tempShip->setYCoord(0, tempyNumber);
+    player1->addShip(0, tempShip);
+    for (int i = 2; i <= shipAmount; i++)
+    {
+        tempShip = new Ship(i);
+        for (int j = 0; j < i; j++)
+        {
+            do
+            {
+                std::cout << "Player 1 - enter X coordinate " << (j+1) << " for 1x" << i << " ship (A-J): ";
+                std::cin >> tempxLetter;
+                if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
+                {
+                    std::cout << "Must enter letter between A and J." << std::endl;
+                }
+            } while((int)tempxLetter < 65 || (int)tempxLetter > 74);
+            do
+            {
+                std::cout << "Player 1 - enter Y coordinate " << (j+1) << " for 1x" << i << " ship (1-10): ";
+                std::cin >> tempyNumber;
+                if (tempyNumber < 1 || tempyNumber > 10)
+                {
+                    std::cout << "Must enter number between 1 and 10." << std::endl;
+                }
+            } while(tempyNumber < 1 || tempyNumber > 10);
+            tempShip->setXCoord(j, tempxLetter);
+            tempShip->setYCoord(j, tempyNumber);
+        }
+        player1->addShip(i-1, tempShip);
+    }
+    std::cout << std::endl;
+    do
+    {
+        std::cout << "Player 2 - enter X coordinate for 1x1 ship (A-J): ";
+        std::cin >> tempxLetter;
+        if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
+        {
+            std::cout << "Must enter letter between A and J." << std::endl;
+        }
+    } while((int)tempxLetter < 65 || (int)tempxLetter > 74);
+    do
+    {
+        std::cout << "Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
+        std::cin >> tempyNumber;
+        if (tempyNumber < 1 || tempyNumber > 10)
+        {
+            std::cout << "Must enter number between 1 and 10." << std::endl;
+        }
+    } while(tempyNumber < 1 || tempyNumber > 10);
+    tempShip = new Ship(1);
+    tempShip->setXCoord(0, tempxLetter);
+    tempShip->setYCoord(0, tempyNumber);
+    player2->addShip(0, tempShip);
+    for (int i = 2; i <= shipAmount; i++)
+    {
+        tempShip = new Ship(i);
+        for (int j = 0; j < i; j++)
+        {
+            do
+            {
+                std::cout << "Player 2 - enter X coordinate " << (j+1) << " for 1x" << i << " ship (A-J): ";
+                std::cin >> tempxLetter;
+                if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
+                {
+                    std::cout << "Must enter letter between A and J." << std::endl;
+                }
+            } while((int)tempxLetter < 65 || (int)tempxLetter > 74);
+            do
+            {
+                std::cout << "Player 2 - enter Y coordinate " << (j+1) << " for 1x" << i << " ship (1-10): ";
+                std::cin >> tempyNumber;
+                if (tempyNumber < 1 || tempyNumber > 10)
+                {
+                    std::cout << "Must enter number between 1 and 10." << std::endl;
+                }
+            } while(tempyNumber < 1 || tempyNumber > 10);
+            tempShip->setXCoord(j, tempxLetter);
+            tempShip->setYCoord(j, tempyNumber);
+        }
+        player2->addShip(i-1, tempShip);
+    }
+
 }
