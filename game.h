@@ -10,6 +10,7 @@ class Game
     void makeBoard();
     void printBoard();
     void obtainShips();
+    void playerGuess();
     void labels();
     int** board;
     int row = 11;

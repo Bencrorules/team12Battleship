@@ -91,6 +91,7 @@ void Game::playGame()
     player2 = new Player(shipAmount);
 
     obtainShips();
+    playerGuess();
 }
 
 void Game::obtainShips()
@@ -121,7 +122,7 @@ void Game::obtainShips()
     } while (tempyNumber < 1 || tempyNumber > 10);
 
     player1->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
-    player1->getShipInfo(0,0);                             // temp line - Lee :: it seems like it is updating the information above function.
+    player1->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
     /*
     tempShip = new Ship(1);
     tempShip->setXCoord(0, tempxLetter);
@@ -174,13 +175,12 @@ void Game::obtainShips()
                 }
                 else
                 {
-                    if 
-                    (
+                    if (
                         // if coordinates are not next to previous coordinates
                         ((abs((int)tempxLetter - prevX > 1)) || (abs(tempyNumber - prevY) > 1))
                         // if coordinates overlap with previous coord
                         || ((abs((int)tempxLetter - prevX) == 0) && (abs(tempyNumber - prevY) == 0))
-                        
+
                     )
                     {
                         std::cout << "Must enter a new coordinate that is next to your previous coordinate." << std::endl;
@@ -195,7 +195,7 @@ void Game::obtainShips()
             prevX = (int)tempxLetter;
             prevY = tempyNumber;
             player1->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
-            player1->getShipInfo(i - 1, j);                             // temp line - Lee :: it seems like it is updating the information above function.
+            player1->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
         }
 
         // player1->addShip(i-1, tempShip);
@@ -223,7 +223,7 @@ void Game::obtainShips()
     } while (tempyNumber < 1 || tempyNumber > 10);
 
     player2->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
-    player2->getShipInfo(0,0);                             // temp line - Lee :: it seems like it is updating the information above function.
+    player2->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
     /*
     tempShip = new Ship(1);
     tempShip->setXCoord(0, tempxLetter);
@@ -275,13 +275,12 @@ void Game::obtainShips()
                 }
                 else
                 {
-                    if 
-                    (
+                    if (
                         // if coordinates are not next to previous coordinates
                         ((abs((int)tempxLetter - prevX > 1)) || (abs(tempyNumber - prevY) > 1))
                         // if coordinates overlap with previous coord
                         || ((abs((int)tempxLetter - prevX) == 0) && (abs(tempyNumber - prevY) == 0))
-                        
+
                     )
                     {
                         std::cout << "Must enter a new coordinate that is next to your previous coordinate." << std::endl;
@@ -296,9 +295,35 @@ void Game::obtainShips()
             prevX = (int)tempxLetter;
             prevY = tempyNumber;
             player2->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
-            player2->getShipInfo(i - 1, j);                             // temp line - Lee :: it seems like it is updating the information above function.
+            player2->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
         }
 
         // player2->addShip(i-1, tempShip);
     }
+}
+
+void Game::playerGuess()
+{
+    char xGuess;
+    int yGuess;
+    do
+    {
+        std::cout << "Player 1 - enter X coordinate (A-J): ";
+        std::cin >> xGuess;
+        if ((int)xGuess < 65 || (int)xGuess > 74)
+        {
+            std::cout << "Must enter letter between A and J\n";
+        }
+    } while ((int)xGuess < 65 || (int)xGuess > 74);
+    // std::cout << xGuess << '\n';
+    do
+    {
+        std::cout << "Player 1 - enter Y coordinate (1-10): ";
+        std::cin >> yGuess;
+        if (yGuess < 1 || yGuess > 10)
+        {
+            std::cout << "Must enter number between 1 and 10\n";
+        }
+    } while (yGuess < 1 || yGuess > 10);
+    // std::cout << yGuess << '\n';
 }
