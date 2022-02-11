@@ -1,0 +1,31 @@
+Team 12 Project 1 Documentation
+
+Person-Hour Estimation:
+	20 Hours. This rough estimate comes from evaluating the difficulty of
+	making battleship per the instructions as well as looking over the
+	additional documents, meetings, and communication needed. We suspect 
+	a total of 2 person hours dedicated to meetings, 4 person hours for
+	documentation of work and organization/communication, and 14 to decide
+	what's the best way to construct a game and executing that as a team.
+
+Person-Hour Log:
+	General communication among team members (number of messages * 30 seconds): 103 minutes
+	GTA meeting: 40 minutes
+	CATME team discussion prep-work: 30 minutes
+	CATME team discussion: 80 minutes
+	Time spent documenting and submitting team discussion: 30 minutes
+	Discord and Github repo setup: 60 minutes
+
+Code Documentation:
+	Our code should look quite similar to labs in Programming 1 and 2. Written 
+	in C++, our battleship game has many classes such as game, player, and ship
+	each performing various functions to get the game working. 
+
+	The game class functions as the core component in running battlship. Initially
+	called by the executive class from main.cpp, this class creates the visual for 
+	an empty board and begins by asking the player for the number of ships and where
+	to place them.
+
+	The ship class handles the individual ships themselves by storing the ships
+	location coordinates and providing a sank variable.
+	
