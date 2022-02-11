@@ -1,5 +1,5 @@
 #include <iostream>
-#include <charconv>
+//#include <charconv>
 #include "game.h"
 
 Game::Game()
@@ -29,7 +29,8 @@ void Game::makeBoard()
     }
     labels();
 }
-void Game::labels(){
+void Game::labels()
+{
 
     int val = 0;
     for (int i = 0; i < row; i++)
@@ -47,7 +48,6 @@ void Game::labels(){
             board[0][9] = 'I';
             board[0][10] = 'J';
             board[i][0] = val;
-
         }
         val++;
     }
@@ -56,19 +56,21 @@ void Game::labels(){
 
 void Game::printBoard()
 {
-    for(int i=0; i<1; i++){
-        for(int j=0; j<row; j++){
+    for (int i = 0; i < 1; i++)
+    {
+        for (int j = 0; j < row; j++)
+        {
             std::cout << char(board[i][j]) << " ";
         }
     }
-    std::cout <<'\n';
+    std::cout << '\n';
     for (int i = 1; i < row; i++)
     {
         for (int j = 0; j < col; j++)
         {
             std::cout << board[i][j] << " ";
         }
-        std::cout <<'\n';
+        std::cout << '\n';
     }
 }
 
@@ -76,28 +78,29 @@ void Game::playGame()
 {
     std::cout << "Welcome to Battleship!" << std::endl;
     std::cout << "----------------------" << std::endl;
-    do {
+    do
+    {
         std::cout << "Ship amount: ";
         std::cin >> shipAmount;
         if (shipAmount < 1 || shipAmount > 5)
         {
             std::cout << "Ship amount must be between 1-5." << std::endl;
         }
-    } while(shipAmount < 1 || shipAmount > 5);
-    Player* player1 = new Player(shipAmount);
-    Player* player2 = new Player(shipAmount);
+    } while (shipAmount < 1 || shipAmount > 5);
+    player1 = new Player(shipAmount);
+    player2 = new Player(shipAmount);
+
     obtainShips();
-
-
 }
 
 void Game::obtainShips()
 {
     char tempxLetter;
     int tempyNumber;
-    Ship* tempShip;
     printBoard();
     std::cout << std::endl;
+
+    /* PLAYER 1 STARTS HERE */
     do
     {
         std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): ";
@@ -106,7 +109,7 @@ void Game::obtainShips()
         {
             std::cout << "Must enter letter between A and J." << std::endl;
         }
-    } while((int)tempxLetter < 65 || (int)tempxLetter > 74);
+    } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
     do
     {
         std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
@@ -115,77 +118,87 @@ void Game::obtainShips()
         {
             std::cout << "Must enter number between 1 and 10." << std::endl;
         }
-    } while(tempyNumber < 1 || tempyNumber > 10);
+    } while (tempyNumber < 1 || tempyNumber > 10);
+
+    player1->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
+    player1->getShipInfo(0,0);                             // temp line - Lee :: it seems like it is updating the information above function.
+    /*
     tempShip = new Ship(1);
     tempShip->setXCoord(0, tempxLetter);
     tempShip->setYCoord(0, tempyNumber);
     player1->addShip(0, tempShip);
+    */
+
+    /* Player 1 - Ship creation when shipAmount is more than 1 */
     for (int i = 2; i <= shipAmount; i++)
     {
-        tempShip = new Ship(i);
         for (int j = 0; j < i; j++)
         {
+            int prevX, prevY;
             /* Asking for X Coordinate */
-            bool isValidXCoord = false;
-            do // need to block entering coordinate that is not valid
-            {
-                std::cout << "Player 1 - enter X coordinate " << (j+1) << " for 1x" << i << " ship (A-J): ";
-                std::cin >> tempxLetter;
-                if (j > 0) // when the starting point was created
-                {
-                    if (abs((int)tempxLetter - (int)tempShip->getXCoord(j-1)) > 1) // if the coord is not next to previous
-                    {
-                        std::cout << "Must enter letter next to your previous coordinate." << std::endl;
-                    }
-                    else
-                    {
-                        isValidXCoord = true;
-                    }
-                }
-                else
-                {
-                    isValidXCoord = true;
-                }
-                if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
-                {
-                    std::cout << "Must enter letter between A and J." << std::endl;
-                }
-            } while((int)tempxLetter < 65 || (int)tempxLetter > 74 || !isValidXCoord);
+            bool isValidCoord = false;
 
-            /* Asking for Y Coordinate */
-            bool isValidYCoord = false;
+            /* Check if coordinates are valid */
             do
             {
-                std::cout << "Player 1 - enter Y coordinate " << (j+1) << " for 1x" << i << " ship (1-10): ";
-                std::cin >> tempyNumber;
-                if (j > 0) // when the starting point was created
+                do // need to block entering coordinate that is not valid
                 {
-                    if (abs(tempyNumber - tempShip->getYCoord(j-1)) > 1) // if the coord is not next to previous
+                    std::cout << "Player 1 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
+                    std::cin >> tempxLetter;
+                    if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
-                        std::cout << "Must enter letter next to your previous coordinate." << std::endl;
+                        std::cout << "Must enter letter between A and J." << std::endl;
                     }
-                    else
+                } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
+
+                /* Asking for Y Coordinate */
+                do
+                {
+                    std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                    std::cin >> tempyNumber;
+                    if (tempyNumber < 1 || tempyNumber > 10)
                     {
-                        isValidYCoord = true;
+                        std::cout << "Must enter number between 1 and 10." << std::endl;
                     }
+                } while (tempyNumber < 1 || tempyNumber > 10);
+
+                /*
+                tempShip->setXCoord(j, tempxLetter);
+                tempShip->setYCoord(j, tempyNumber);
+                */
+
+                // *need to add condition check if coord overlaps with prev ship coords*
+                if (j == 0) // when it is first time entering coordinate with multiple coord ship
+                {
+                    isValidCoord = true;
                 }
                 else
                 {
-                    isValidYCoord = true;
+                    if 
+                    (
+                        // if coordinates are not next to previous coordinates
+                        ((abs((int)tempxLetter - prevX > 1)) || (abs(tempyNumber - prevY) > 1))
+                        // if coordinates overlap with previous coord
+                        || ((abs((int)tempxLetter - prevX) == 0) && (abs(tempyNumber - prevY) == 0))
+                        
+                    )
+                    {
+                        std::cout << "Must enter a new coordinate that is next to your previous coordinate." << std::endl;
+                        std::cout << "Previous Coordinate : " << prevX << ", " << prevY << std::endl;
+                    }
+                    else
+                    {
+                        isValidCoord = true;
+                    }
                 }
-                if (tempyNumber < 1 || tempyNumber > 10)
-                {
-                    std::cout << "Must enter number between 1 and 10." << std::endl;
-                }
-            } while(tempyNumber < 1 || tempyNumber > 10 || !isValidYCoord);
-
-
-            tempShip->setXCoord(j, tempxLetter);
-            tempShip->setYCoord(j, tempyNumber);
+            } while (!isValidCoord);
+            prevX = (int)tempxLetter;
+            prevY = tempyNumber;
+            player1->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
+            player1->getShipInfo(i - 1, j);                             // temp line - Lee :: it seems like it is updating the information above function.
         }
 
-        player1->addShip(i-1, tempShip);
-
+        // player1->addShip(i-1, tempShip);
     }
     std::cout << std::endl;
 
@@ -198,7 +211,7 @@ void Game::obtainShips()
         {
             std::cout << "Must enter letter between A and J." << std::endl;
         }
-    } while((int)tempxLetter < 65 || (int)tempxLetter > 74);
+    } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
     do
     {
         std::cout << "Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
@@ -207,74 +220,85 @@ void Game::obtainShips()
         {
             std::cout << "Must enter number between 1 and 10." << std::endl;
         }
-    } while(tempyNumber < 1 || tempyNumber > 10);
+    } while (tempyNumber < 1 || tempyNumber > 10);
+
+    player2->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
+    player2->getShipInfo(0,0);                             // temp line - Lee :: it seems like it is updating the information above function.
+    /*
     tempShip = new Ship(1);
     tempShip->setXCoord(0, tempxLetter);
     tempShip->setYCoord(0, tempyNumber);
     player2->addShip(0, tempShip);
+    */
+
+    /* PLAYER 2 When ship amount is more than one */
     for (int i = 2; i <= shipAmount; i++)
     {
-        tempShip = new Ship(i);
         for (int j = 0; j < i; j++)
         {
-            /* Asking for X Coordinate */
-            bool isValidXCoord = false;
-            do // need to block entering coordinate that is not valid
-            {
-                std::cout << "Player 2 - enter X coordinate " << (j+1) << " for 1x" << i << " ship (A-J): ";
-                std::cin >> tempxLetter;
-                if (j > 0) // when the starting point was created
-                {
-                    if (abs((int)tempxLetter - (int)tempShip->getXCoord(j-1)) > 1) // if the coord is not next to previous
-                    {
-                        std::cout << "Must enter letter next to your previous coordinate." << std::endl;
-                    }
-                    else
-                    {
-                        isValidXCoord = true;
-                    }
-                }
-                else
-                {
-                    isValidXCoord = true;
-                }
-                if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
-                {
-                    std::cout << "Must enter letter between A and J." << std::endl;
-                }
-            } while((int)tempxLetter < 65 || (int)tempxLetter > 74 || !isValidXCoord);
+            int prevX, prevY;
 
-            
-            /* Asking for Y Coordinate */
-            bool isValidYCoord = false;
+            /* Asking for X Coordinate */
+            bool isValidCoord = false;
             do
             {
-                std::cout << "Player 1 - enter Y coordinate " << (j+1) << " for 1x" << i << " ship (1-10): ";
-                std::cin >> tempyNumber;
-                if (j > 0) // when the starting point was created
+
+                do // need to block entering coordinate that is not valid
                 {
-                    if (abs(tempyNumber - tempShip->getYCoord(j-1)) > 1) // if the coord is not next to previous
+                    std::cout << "Player 2 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
+                    std::cin >> tempxLetter;
+                    if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
-                        std::cout << "Must enter letter next to your previous coordinate." << std::endl;
+                        std::cout << "Must enter letter between A and J." << std::endl;
                     }
-                    else
+                } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
+
+                /* Asking for Y Coordinate */
+                do
+                {
+                    std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                    std::cin >> tempyNumber;
+                    if (tempyNumber < 1 || tempyNumber > 10)
                     {
-                        isValidYCoord = true;
+                        std::cout << "Must enter number between 1 and 10." << std::endl;
                     }
+                } while (tempyNumber < 1 || tempyNumber > 10);
+                /*
+                tempShip->setXCoord(j, tempxLetter);
+                tempShip->setYCoord(j, tempyNumber);
+                */
+
+                // *need to add condition check if coord overlaps with prev ship coords*
+                if (j == 0) // when it is first time entering coordinate with multiple coord ship
+                {
+                    isValidCoord = true;
                 }
                 else
                 {
-                    isValidYCoord = true;
+                    if 
+                    (
+                        // if coordinates are not next to previous coordinates
+                        ((abs((int)tempxLetter - prevX > 1)) || (abs(tempyNumber - prevY) > 1))
+                        // if coordinates overlap with previous coord
+                        || ((abs((int)tempxLetter - prevX) == 0) && (abs(tempyNumber - prevY) == 0))
+                        
+                    )
+                    {
+                        std::cout << "Must enter a new coordinate that is next to your previous coordinate." << std::endl;
+                        std::cout << "Previous Coordinate : " << prevX << ", " << prevY << std::endl;
+                    }
+                    else
+                    {
+                        isValidCoord = true;
+                    }
                 }
-                if (tempyNumber < 1 || tempyNumber > 10)
-                {
-                    std::cout << "Must enter number between 1 and 10." << std::endl;
-                }
-            } while(tempyNumber < 1 || tempyNumber > 10 || !isValidYCoord);
-            tempShip->setXCoord(j, tempxLetter);
-            tempShip->setYCoord(j, tempyNumber);
+            } while (!isValidCoord);
+            prevX = (int)tempxLetter;
+            prevY = tempyNumber;
+            player2->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
+            player2->getShipInfo(i - 1, j);                             // temp line - Lee :: it seems like it is updating the information above function.
         }
-        player2->addShip(i-1, tempShip);
-    }
 
+        // player2->addShip(i-1, tempShip);
+    }
 }

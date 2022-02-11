@@ -1,0 +1,37 @@
+02.11.22
+@yiwoduf
+
+[FIX] - fixed condition check for coordinates of ships with length > 1.
+    i. Coordinate should not overlap with the previous coordinate of same ship.
+        exception.(A,2 and A,3) :: check if BOTH x and y coords are equal. 
+    ii. Cooridnate should not be apart from previous coordinate.
+        :: check if either X or Y difference with previous X, Y is greater than 1.
+[FIX] - Fixed seg fault when adding ship to player.
+
+
+[ADD] - added new functions:
+    Player Class
+        addShip - new function with 5 arguments.
+        getShipInfo - *for debugging purpose* prints the latest coordinate update.
+        getPrevX,YInfo - *for debugging purpose* might not use later.
+
+[MOD] - removed unnecessary codes and added additional codes:
+    Game Class
+        tempShip was not needed in game.cpp -> used it on new addShip function instead.
+        check for valid coordinate input was added.
+        *debugging purpose* display previous coordinate when there is an error.
+        after coordinates are put, display the which ship, which spot, value of coordinate.
+        removed declaring Player 1, 2 multiple times which wasn't needed (seg fault).
+        
+[ERR] - temporarily fixed by //
+    Game Class
+        UNIX make was not able to find <charconv>
+
+[NEED] - 
+    1. One more condition, ships should not be overlapped with previous ships for the same player. Add condition check.
+    2. Gameplay function, calling coordinates, killShip() etc.
+    3. Display live battleship board every turn.
+    4. Need to implement the colored pins for the display board.
+
+[] - at this point of build, inserting coordinates and ship data to both players work fine. No seg fault.
+    just no interaction after all the coordinates are put. 
