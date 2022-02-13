@@ -11,6 +11,13 @@ Game::Game()
     player2 = nullptr;
 }
 
+Game::~Game(){
+    for(int i =0; i<row; i++){
+        delete[] board[i];
+    }
+    delete[] board;
+}
+
 void Game::makeBoard()
 {
     board = new int *[row];
