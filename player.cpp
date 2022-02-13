@@ -21,13 +21,6 @@ Player::~Player(){ //Player class destructor
     delete[] ships; //delete the array of ships
 }
 
-/* Add ship information to a Players ship collection */
-void Player::addShip(int shipNumber, Ship* ship)
-{
-
-}
-
-/* temp function - Lee  */
 void Player::addShip(int shipNumber, int coordIndex, char xCoord, int yCoord, int shipSize)
 {
     ships[shipNumber]->setXCoord(coordIndex, xCoord);

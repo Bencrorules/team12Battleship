@@ -42,7 +42,7 @@ void Game::makeBoard() //game class function 'makeBoard' creates an int 2D array
 
 void Game::labels() //game class function 'labels' sets the values on the edges of the board to their coordinate representations
 {
-    board[0][0] = '- '; //this line and the following 10 set the first row of the board to visually represent coordinates
+    board[0][0] = '-'; //this line and the following 10 set the first row of the board to visually represent coordinates
     board[0][1] = 'A';
     board[0][2] = 'B';
     board[0][3] = 'C';
@@ -68,13 +68,25 @@ void Game::printBoard() //game class function 'printBoard' prints the board to t
     {
         for (int j = 0; j < col; j++) //for each columb of the board...
         {
+            if(i == 0 && j == 0) // if '-'
+            {
+               std::cout << " ";
+            }
             if(j==0 && 0<i && i<10) //if the coordinate is on the first columb and on row 1 through 9...
             {
                 std::cout << board[i][j] << "  "; //print the board value with correct visual spacing
             }
             else
             {
-                std::cout << board[i][j] << " "; //print the board value with correct visual spacing
+                //std::cout << board[i][j] << " "; //print the board value with correct visual spacing
+                if ((int)board[i][j] > 10)
+                {
+                    std::cout << (char)board[i][j] << " ";
+                }
+                else
+                {
+                    std::cout << board[i][j] << " "; 
+                }
             }
         }
         std::cout << '\n'; //print new line
@@ -89,6 +101,7 @@ void Game::playGame() //game class function 'playGame' controls much of the game
     {
         std::cout << "Ship amount: "; //ask for ship amount
         std::cin >> shipAmount; //store player entry to shipAmount variable
+        /* // disabled temporarily due to linking erro
         while (std::cin.fail()) //while input failed
         {
             std::cin.clear(); //clear the cache 
@@ -97,7 +110,8 @@ void Game::playGame() //game class function 'playGame' controls much of the game
             std::cout << "Ship amount: "; //ask again for the ship amount
             std::cin >> shipAmount; //store player entry to shipAmount
         }
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad values
+        */
+        //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad values
         if (shipAmount < 1 || shipAmount > 5) //if the shipAmount isn't 1-5...
         {
             std::cout << "Ship amount must be between 1-5." << std::endl; //tell player ship amount must be between 1-5
@@ -122,7 +136,7 @@ void Game::obtainShips() //game class function 'obtainShips'
         std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): "; //ask player 1 for the x coordinate of their 1x1 ship
         std::cin >> tempxLetter; //store player input to tempxLetter
 
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+        //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
         // std::cout << (char)tempxLetter << '\n';
         if ((int)tempxLetter < 65 || (int)tempxLetter > 74) //if unicode for the player input isn't between 65 and 74 (A-J)
         {
@@ -133,6 +147,7 @@ void Game::obtainShips() //game class function 'obtainShips'
     {
         std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): "; //ask player for the y coordinate for their 1x1 ship
         std::cin >> tempyNumber; //store player input
+        /* // disabled temporarily due to linking error
         while (std::cin.fail()) //while the input is invalid...
         {
             std::cin.clear(); //clear cache
@@ -142,6 +157,7 @@ void Game::obtainShips() //game class function 'obtainShips'
             std::cin >> tempyNumber; //store player input
         }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore the value
+        */
         if (tempyNumber < 1 || tempyNumber > 10) //if the player input isn't between 1 and 10...
         {
             std::cout << "Must enter number between 1 and 10." << std::endl; //inform player of error
@@ -167,7 +183,7 @@ void Game::obtainShips() //game class function 'obtainShips'
                 {
                     std::cout << "Player 1 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+                    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
@@ -179,6 +195,7 @@ void Game::obtainShips() //game class function 'obtainShips'
                 {
                     std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
+                    /* // disabled temporarily due to linking error
                     while (std::cin.fail())
                     {
                         std::cin.clear();
@@ -188,6 +205,7 @@ void Game::obtainShips() //game class function 'obtainShips'
                         std::cin >> tempyNumber;
                     }
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    */
                     if (tempyNumber < 1 || tempyNumber > 10)
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -231,7 +249,7 @@ void Game::obtainShips() //game class function 'obtainShips'
     {
         std::cout << "Player 2 - enter X coordinate for 1x1 ship (A-J): ";
         std::cin >> tempxLetter;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+        //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
         if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
         {
             std::cout << "Must enter letter between A and J." << std::endl;
@@ -241,6 +259,7 @@ void Game::obtainShips() //game class function 'obtainShips'
     {
         std::cout << "Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
         std::cin >> tempyNumber;
+        /* // disable temporarily due to linking error
         while (std::cin.fail())
         {
             std::cin.clear();
@@ -250,6 +269,7 @@ void Game::obtainShips() //game class function 'obtainShips'
             std::cin >> tempyNumber;
         }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        */
         if (tempyNumber < 1 || tempyNumber > 10)
         {
             std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -275,7 +295,7 @@ void Game::obtainShips() //game class function 'obtainShips'
                 {
                     std::cout << "Player 2 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+                    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
@@ -287,6 +307,7 @@ void Game::obtainShips() //game class function 'obtainShips'
                 {
                     std::cout << "Player 2 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
+                    /* // disabled temporarily due to linking error
                     while (std::cin.fail())
                     {
                         std::cin.clear();
@@ -300,6 +321,7 @@ void Game::obtainShips() //game class function 'obtainShips'
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
                     }
+                    */
                 } while (tempyNumber < 1 || tempyNumber > 10);
 
                 // *need to add condition check if coord overlaps with prev ship coords*
@@ -348,7 +370,7 @@ void Game::playerGuess()
         {
             std::cout << "[ATTACK] Player 1 - enter X coordinate (A-J): ";
             std::cin >> xGuess;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+            //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
             if ((int)xGuess < 65 || (int)xGuess > 74)
             {
                 std::cout << "Must enter letter between A and J\n";
@@ -359,6 +381,7 @@ void Game::playerGuess()
         {
             std::cout << "[ATTACK] Player 1 - enter Y coordinate (1-10): ";
             std::cin >> yGuess;
+            /* // disabled temporarily due to linking error
             while (std::cin.fail())
             {
                 std::cin.clear();
@@ -372,6 +395,7 @@ void Game::playerGuess()
             {
                 std::cout << "Must enter number between 1 and 10\n";
             }
+            */
         } while (yGuess < 1 || yGuess > 10);
         // std::cout << yGuess << '\n';
 
@@ -398,7 +422,7 @@ void Game::playerGuess()
             {
                 std::cout << "[ATTACK] Player 2 - enter X coordinate (A-J): ";
                 std::cin >> xGuess;
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+                //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                 if ((int)xGuess < 65 || (int)xGuess > 74)
                 {
                     std::cout << "Must enter letter between A and J\n";
@@ -409,6 +433,7 @@ void Game::playerGuess()
             {
                 std::cout << "[ATTACK] Player 2 - enter Y coordinate (1-10): ";
                 std::cin >> yGuess;
+                /* // disabled temporarily due to linking error
                 while (std::cin.fail())
                 {
                     std::cin.clear();
@@ -422,6 +447,7 @@ void Game::playerGuess()
                 {
                     std::cout << "Must enter number between 1 and 10\n";
                 }
+                */
             } while (yGuess < 1 || yGuess > 10);
             // std::cout << yGuess << '\n';
 
