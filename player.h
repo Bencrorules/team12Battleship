@@ -6,6 +6,7 @@ class Player
 {
     public:
     Player(int amountShips);
+    ~Player();
     void addShip(int shipNumber, Ship* ship);
     
     void addShip(int shipNumber, int coordIndex, char xCoord, int yCoord, int shipSize);
