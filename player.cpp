@@ -16,7 +16,7 @@ Player::Player(int amountShips)
 
 Player::~Player(){
     for(int i=0; i< numberOfShips; i++){
-        delete[] ships[i];
+        delete ships[i];
     }
     delete[] ships;
 }
