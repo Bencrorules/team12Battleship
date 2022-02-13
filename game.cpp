@@ -29,9 +29,9 @@ void Game::makeBoard()
     }
     labels();
 }
+
 void Game::labels()
 {
-
     int val = 0;
     for (int i = 0; i < row; i++)
     {
@@ -100,7 +100,6 @@ void Game::obtainShips()
     int tempyNumber;
     printBoard();
     std::cout << std::endl;
-
     /* PLAYER 1 STARTS HERE */
     do
     {
@@ -123,12 +122,6 @@ void Game::obtainShips()
 
     player1->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player1->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
-    /*
-    tempShip = new Ship(1);
-    tempShip->setXCoord(0, tempxLetter);
-    tempShip->setYCoord(0, tempyNumber);
-    player1->addShip(0, tempShip);
-    */
 
     /* Player 1 - Ship creation when shipAmount is more than 1 */
     for (int i = 2; i <= shipAmount; i++)
@@ -163,11 +156,6 @@ void Game::obtainShips()
                     }
                 } while (tempyNumber < 1 || tempyNumber > 10);
 
-                /*
-                tempShip->setXCoord(j, tempxLetter);
-                tempShip->setYCoord(j, tempyNumber);
-                */
-
                 // *need to add condition check if coord overlaps with prev ship coords*
                 if (j == 0) // when it is first time entering coordinate with multiple coord ship
                 {
@@ -197,8 +185,6 @@ void Game::obtainShips()
             player1->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
             player1->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
         }
-
-        // player1->addShip(i-1, tempShip);
     }
     std::cout << std::endl;
 
@@ -224,12 +210,6 @@ void Game::obtainShips()
 
     player2->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player2->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
-    /*
-    tempShip = new Ship(1);
-    tempShip->setXCoord(0, tempxLetter);
-    tempShip->setYCoord(0, tempyNumber);
-    player2->addShip(0, tempShip);
-    */
 
     /* PLAYER 2 When ship amount is more than one */
     for (int i = 2; i <= shipAmount; i++)
@@ -256,17 +236,13 @@ void Game::obtainShips()
                 /* Asking for Y Coordinate */
                 do
                 {
-                    std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                    std::cout << "Player 2 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
                     if (tempyNumber < 1 || tempyNumber > 10)
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
                     }
                 } while (tempyNumber < 1 || tempyNumber > 10);
-                /*
-                tempShip->setXCoord(j, tempxLetter);
-                tempShip->setYCoord(j, tempyNumber);
-                */
 
                 // *need to add condition check if coord overlaps with prev ship coords*
                 if (j == 0) // when it is first time entering coordinate with multiple coord ship
@@ -306,24 +282,92 @@ void Game::playerGuess()
 {
     char xGuess;
     int yGuess;
-    do
+
+    /* PLAYER 1 : Guessing Coordinates */
+    while (!gameFinished)
     {
-        std::cout << "Player 1 - enter X coordinate (A-J): ";
-        std::cin >> xGuess;
-        if ((int)xGuess < 65 || (int)xGuess > 74)
+        do
         {
-            std::cout << "Must enter letter between A and J\n";
-        }
-    } while ((int)xGuess < 65 || (int)xGuess > 74);
-    // std::cout << xGuess << '\n';
-    do
-    {
-        std::cout << "Player 1 - enter Y coordinate (1-10): ";
-        std::cin >> yGuess;
-        if (yGuess < 1 || yGuess > 10)
+            std::cout << "[ATTACK] Player 1 - enter X coordinate (A-J): ";
+            std::cin >> xGuess;
+            if ((int)xGuess < 65 || (int)xGuess > 74)
+            {
+                std::cout << "Must enter letter between A and J\n";
+            }
+        } while ((int)xGuess < 65 || (int)xGuess > 74);
+        // std::cout << xGuess << '\n';
+        do
         {
-            std::cout << "Must enter number between 1 and 10\n";
+            std::cout << "[ATTACK] Player 1 - enter Y coordinate (1-10): ";
+            std::cin >> yGuess;
+            if (yGuess < 1 || yGuess > 10)
+            {
+                std::cout << "Must enter number between 1 and 10\n";
+            }
+        } while (yGuess < 1 || yGuess > 10);
+        // std::cout << yGuess << '\n';
+
+        /* Where we need to update new board */
+        if (player2->shipAttacked(xGuess, yGuess)) // handle player
+        {
+            // 65 is A, to make A number 1 index, -64
+            board[((int)xGuess) - 64][yGuess] = 'R'; // if it hits ship, update board coord to 'RED'
+            if (player2->allShipDown())
+            {
+                finishGame(1);
+            }
         }
-    } while (yGuess < 1 || yGuess > 10);
-    // std::cout << yGuess << '\n';
+        else
+        {
+            board[((int)xGuess) - 64][yGuess] = 'W'; // if it didn't hit anything, update board coord to 'WHITE'
+        }
+        // printBoardP1();
+
+        if (!gameFinished)
+        {
+            /* PLAYER 2 : Guessing Coordinates */
+            do
+            {
+                std::cout << "[ATTACK] Player 2 - enter X coordinate (A-J): ";
+                std::cin >> xGuess;
+                if ((int)xGuess < 65 || (int)xGuess > 74)
+                {
+                    std::cout << "Must enter letter between A and J\n";
+                }
+            } while ((int)xGuess < 65 || (int)xGuess > 74);
+            // std::cout << xGuess << '\n';
+            do
+            {
+                std::cout << "[ATTACK] Player 2 - enter Y coordinate (1-10): ";
+                std::cin >> yGuess;
+                if (yGuess < 1 || yGuess > 10)
+                {
+                    std::cout << "Must enter number between 1 and 10\n";
+                }
+            } while (yGuess < 1 || yGuess > 10);
+            // std::cout << yGuess << '\n';
+
+            /* Where we need to update new board */
+            if (player1->shipAttacked(xGuess, yGuess)) // handle player
+            {
+                // 65 is A, to make A number 1 index, -64
+                board[((int)xGuess) - 64][yGuess] = 'R'; // if it hits ship, update board coord to 'RED'
+                if (player1->allShipDown())
+                {
+                    finishGame(2);
+                }
+            }
+            else
+            {
+                board[((int)xGuess) - 64][yGuess] = 'W'; // if it didn't hit anything, update board coord to 'WHITE'
+            }
+            // printBoardP2();
+        }
+    }
+}
+
+void Game::finishGame(int winner)
+{
+    std::cout << "Player " << winner << " wins the game! \n";
+    gameFinished = true;
 }

@@ -1,3 +1,23 @@
+02.12.22
+@yiwoduf
+
+[FIX] - Error with addShip() where it deletes the value of previous coord position.
+[ADD] - Now you can attack ships
+[ADD] - Now you can kill the ships
+[ADD] - Now you can win the game
+[ADD] - Finish game function was added
+
+[Functions] -
+	- Game class + finishGame()
+	- Ship class + positionAttacked() + getShipLength() + positionDown() + killShip()
+	- Player Class + shipAttacked() + allShipDown()
+
+[NEED] -
+	- still need to block some inputs such as overlap with previous ship
+	- need to add display by player showing current status
+	- need better user interface
+	- need to block attack inputs so you don't attack 'pinned' coordinates
+
 02.11.22
 @yiwoduf
 

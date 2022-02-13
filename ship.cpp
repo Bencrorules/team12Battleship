@@ -3,6 +3,7 @@
 
 Ship::Ship(int length)
 {
+    shipLength = length;
     shipCoords = new int*[length];
     spotsHit = new bool[length];
     for (int i = 0; i < length; i++)
@@ -11,6 +12,12 @@ Ship::Ship(int length)
         spotsHit[i] = false;
     }
     sank = false;
+    /* Initialize coord values to avoid seg fault */
+    for (int i = 0; i < length; i++)
+    {
+        shipCoords[i][0] = 0;
+        shipCoords[i][1] = 0;
+    }
 }
 
 bool Ship::isSank()
@@ -38,3 +45,26 @@ int Ship::getYCoord(int spotNumber)
     return shipCoords[spotNumber][1];
 }
 
+int Ship::getShipLength()
+{
+    return shipLength;
+}
+
+void Ship::positionAttacked(int spotNumber)
+{
+    spotsHit[spotNumber] = true;
+}
+
+bool Ship::positionDown(int spotNumber)
+{
+    if (spotsHit[spotNumber] == true)
+    {
+        return true;
+    }
+    return false;
+}
+
+void Ship::killShip()
+{
+    sank = true;
+}
