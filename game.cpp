@@ -113,9 +113,9 @@ void Game::obtainShips()
     {
         std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): ";
         std::cin >> tempxLetter;
-        
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        //std::cout << (char)tempxLetter << '\n';
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+        // std::cout << (char)tempxLetter << '\n';
         if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
         {
             std::cout << "Must enter letter between A and J." << std::endl;
@@ -125,7 +125,8 @@ void Game::obtainShips()
     {
         std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
         std::cin >> tempyNumber;
-        while(std::cin.fail()){
+        while (std::cin.fail())
+        {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -158,7 +159,7 @@ void Game::obtainShips()
                 {
                     std::cout << "Player 1 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
@@ -222,7 +223,7 @@ void Game::obtainShips()
     {
         std::cout << "Player 2 - enter X coordinate for 1x1 ship (A-J): ";
         std::cin >> tempxLetter;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
         if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
         {
             std::cout << "Must enter letter between A and J." << std::endl;
@@ -266,7 +267,7 @@ void Game::obtainShips()
                 {
                     std::cout << "Player 2 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
@@ -283,7 +284,7 @@ void Game::obtainShips()
                         std::cin.clear();
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                        std::cout << "Player 2 - enter Y coordinate " << (j+1) << " for 1x " << i << " ship (1-10): ";
+                        std::cout << "Player 2 - enter Y coordinate " << (j + 1) << " for 1x " << i << " ship (1-10): ";
                         std::cin >> tempyNumber;
                     }
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -339,7 +340,7 @@ void Game::playerGuess()
         {
             std::cout << "[ATTACK] Player 1 - enter X coordinate (A-J): ";
             std::cin >> xGuess;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
             if ((int)xGuess < 65 || (int)xGuess > 74)
             {
                 std::cout << "Must enter letter between A and J\n";
@@ -389,7 +390,7 @@ void Game::playerGuess()
             {
                 std::cout << "[ATTACK] Player 2 - enter X coordinate (A-J): ";
                 std::cin >> xGuess;
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                 if ((int)xGuess < 65 || (int)xGuess > 74)
                 {
                     std::cout << "Must enter letter between A and J\n";
