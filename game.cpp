@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <charconv>
 #include "game.h"
 
 Game::Game()
@@ -82,6 +81,15 @@ void Game::playGame()
     {
         std::cout << "Ship amount: ";
         std::cin >> shipAmount;
+        while (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << "Ship amount: ";
+            std::cin >> shipAmount;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (shipAmount < 1 || shipAmount > 5)
         {
             std::cout << "Ship amount must be between 1-5." << std::endl;
@@ -105,6 +113,9 @@ void Game::obtainShips()
     {
         std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): ";
         std::cin >> tempxLetter;
+        
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        //std::cout << (char)tempxLetter << '\n';
         if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
         {
             std::cout << "Must enter letter between A and J." << std::endl;
@@ -114,6 +125,14 @@ void Game::obtainShips()
     {
         std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
         std::cin >> tempyNumber;
+        while(std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
+            std::cin >> tempyNumber;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (tempyNumber < 1 || tempyNumber > 10)
         {
             std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -139,6 +158,7 @@ void Game::obtainShips()
                 {
                     std::cout << "Player 1 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
@@ -150,6 +170,15 @@ void Game::obtainShips()
                 {
                     std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
+                    while (std::cin.fail())
+                    {
+                        std::cin.clear();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                        std::cin >> tempyNumber;
+                    }
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     if (tempyNumber < 1 || tempyNumber > 10)
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -193,6 +222,7 @@ void Game::obtainShips()
     {
         std::cout << "Player 2 - enter X coordinate for 1x1 ship (A-J): ";
         std::cin >> tempxLetter;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
         {
             std::cout << "Must enter letter between A and J." << std::endl;
@@ -202,6 +232,15 @@ void Game::obtainShips()
     {
         std::cout << "Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
         std::cin >> tempyNumber;
+        while (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << "Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
+            std::cin >> tempyNumber;
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (tempyNumber < 1 || tempyNumber > 10)
         {
             std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -227,6 +266,7 @@ void Game::obtainShips()
                 {
                     std::cout << "Player 2 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
@@ -238,6 +278,15 @@ void Game::obtainShips()
                 {
                     std::cout << "Player 2 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
+                    while (std::cin.fail())
+                    {
+                        std::cin.clear();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        std::cout << "Player 2 - enter Y coordinate " << (j+1) << " for 1x " << i << " ship (1-10): ";
+                        std::cin >> tempyNumber;
+                    }
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     if (tempyNumber < 1 || tempyNumber > 10)
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -290,6 +339,7 @@ void Game::playerGuess()
         {
             std::cout << "[ATTACK] Player 1 - enter X coordinate (A-J): ";
             std::cin >> xGuess;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if ((int)xGuess < 65 || (int)xGuess > 74)
             {
                 std::cout << "Must enter letter between A and J\n";
@@ -300,6 +350,15 @@ void Game::playerGuess()
         {
             std::cout << "[ATTACK] Player 1 - enter Y coordinate (1-10): ";
             std::cin >> yGuess;
+            while (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                std::cout << "[ATTACK] Player 1 - enter Y coordinate (1-10): ";
+                std::cin >> yGuess;
+            }
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if (yGuess < 1 || yGuess > 10)
             {
                 std::cout << "Must enter number between 1 and 10\n";
@@ -330,6 +389,7 @@ void Game::playerGuess()
             {
                 std::cout << "[ATTACK] Player 2 - enter X coordinate (A-J): ";
                 std::cin >> xGuess;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 if ((int)xGuess < 65 || (int)xGuess > 74)
                 {
                     std::cout << "Must enter letter between A and J\n";
@@ -340,6 +400,15 @@ void Game::playerGuess()
             {
                 std::cout << "[ATTACK] Player 2 - enter Y coordinate (1-10): ";
                 std::cin >> yGuess;
+                while (std::cin.fail())
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                    std::cout << "[ATTACK] Player 2 - enter Y coordinate (1-10): ";
+                    std::cin >> yGuess;
+                }
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 if (yGuess < 1 || yGuess > 10)
                 {
                     std::cout << "Must enter number between 1 and 10\n";
