@@ -1,7 +1,7 @@
 #include <iostream>
 #include "executive.h"
 
-void Executive::run()
+void Executive::run() //Executive function called run
 {
-    myGame.playGame();
+    myGame.playGame(); //calls the playGame function of the game class
 }
