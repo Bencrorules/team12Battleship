@@ -10,14 +10,17 @@ Person-Hour Estimation:
 	through code.
 
 Person-Hour Log:
-	General communication among team members (number of messages * 30 seconds): 138 minutes
+	General communication among team members (number of messages * 30 seconds): 142 minutes
 	GTA meeting: 40 minutes
 	CATME team discussion prep-work: 30 minutes
 	CATME team discussion: 80 minutes
-	Time spent documenting and submitting team discussion: 30 minutes
+	Documenting and submitting team discussion: 30 minutes
 	Discord and Github repo setup and initial email to the team: 60 minutes
 	Code documentation: 30 minutes
 	Code comments: 90 minutes
+	Coding: 12 hours
+
+	Total: 20.4 hours
 
 
 Code Documentation:
