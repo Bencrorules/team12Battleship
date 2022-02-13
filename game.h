@@ -4,7 +4,7 @@
 
 class Game
 {
-    public:
+public:
     Game();
     ~Game();
     void playGame();
@@ -14,12 +14,14 @@ class Game
     void playerGuess();
     void labels();
     void finishGame(int playerID);
-    int** board;
     int row = 11;
     int col = 11;
     int shipAmount;
     bool gameFinished = false;
-    Player* player1;
-    Player* player2;
+    Player *player1;
+    Player *player2;
+
+private:
+    int **board;
 };
 #endif
