@@ -5,6 +5,7 @@ class Ship
 {
     public:
     Ship(int length);
+    ~Ship();
     bool isSank();
     void setXCoord(int spotNumber, char value);
     char getXCoord(int spotNumber);
