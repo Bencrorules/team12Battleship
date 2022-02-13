@@ -14,6 +14,13 @@ Player::Player(int amountShips)
     numberOfShips = amountShips;
 }
 
+Player::~Player(){
+    for(int i=0; i< numberOfShips; i++){
+        delete[] ships[i];
+    }
+    delete[] ships;
+}
+
 /* Add ship information to a Players ship collection */
 void Player::addShip(int shipNumber, Ship* ship)
 {
