@@ -166,6 +166,10 @@ void Game::obtainShips() // game class function 'obtainShips'
 
     player1->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player1->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
+    std::cout << std::endl;
+    player1->printShipBoard();
+    std::cout << std::endl;
+
 
     /* Player 1 - Ship creation when shipAmount is more than 1 */
     for (int i = 2; i <= shipAmount; i++) // for the second ship and each one after...
@@ -240,6 +244,9 @@ void Game::obtainShips() // game class function 'obtainShips'
             prevY = tempyNumber;
             player1->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
             player1->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
+            std::cout << std::endl;
+            player1->printShipBoard();
+            std::cout << std::endl;
         }
     }
     std::cout << std::endl;
@@ -278,6 +285,9 @@ void Game::obtainShips() // game class function 'obtainShips'
 
     player2->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player2->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
+    std::cout << std::endl;
+    player2->printShipBoard();
+    std::cout << std::endl;
 
     /* PLAYER 2 When ship amount is more than one */
     for (int i = 2; i <= shipAmount; i++)
@@ -352,6 +362,9 @@ void Game::obtainShips() // game class function 'obtainShips'
             prevY = tempyNumber;
             player2->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
             player2->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
+            std::cout << std::endl;
+            player2->printShipBoard();
+            std::cout << std::endl;
         }
 
         // player2->addShip(i-1, tempShip);
