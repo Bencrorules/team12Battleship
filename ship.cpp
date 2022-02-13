@@ -20,6 +20,14 @@ Ship::Ship(int length)
     }
 }
 
+Ship::~Ship(){
+    delete[] spotsHit;
+    for(int i=0; i<shipLength; i++){
+        delete[] shipCoords[i];
+    }
+    delete[] shipCoords;
+}
+
 bool Ship::isSank()
 {
     return sank;
