@@ -1,3 +1,9 @@
+02.13.22
+@yiwoduf
+
+[*MOD] - temporarily disabled input check 'numeric_limits' due to g++ linking error
+[FIX] - now display boards are clean up
+
 02.12.22
 @yiwoduf
 
