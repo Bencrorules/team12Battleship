@@ -16,6 +16,10 @@ Game::~Game(){
         delete[] board[i];
     }
     delete[] board;
+    delete player1;
+    delete player2;
+
+
 }
 
 void Game::makeBoard()
