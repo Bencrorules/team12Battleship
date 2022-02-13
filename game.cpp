@@ -101,18 +101,18 @@ void Game::playGame() // game class function 'playGame' controls much of the gam
     {
         std::cout << "Ship amount: "; // ask for ship amount
         std::cin >> shipAmount;       // store player entry to shipAmount variable
-        
-        while (std::cin.fail()) //while input failed
-        {
-            std::cin.clear(); //clear the cache
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad values
 
-            std::cout << "Ship amount: "; //ask again for the ship amount
-            std::cin >> shipAmount; //store player entry to shipAmount
+        while (std::cin.fail()) // while input failed
+        {
+            std::cin.clear();                                                   // clear the cache
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore bad values
+
+            std::cout << "Ship amount (1-5): "; // ask again for the ship amount
+            std::cin >> shipAmount;       // store player entry to shipAmount
         }
-        
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad values
-        if (shipAmount < 1 || shipAmount > 5) // if the shipAmount isn't 1-5...
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore bad values
+        if (shipAmount < 1 || shipAmount > 5)                               // if the shipAmount isn't 1-5...
         {
             std::cout << "Ship amount must be between 1-5." << std::endl; // tell player ship amount must be between 1-5
         }
@@ -148,17 +148,17 @@ void Game::obtainShips() // game class function 'obtainShips'
     {
         std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): "; // ask player for the y coordinate for their 1x1 ship
         std::cin >> tempyNumber;                                            // store player input
-        
-        while (std::cin.fail()) //while the input is invalid...
-        {
-            std::cin.clear(); //clear cache
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore the value
 
-            std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): "; //ask player again for the value
-            std::cin >> tempyNumber; //store player input
+        while (std::cin.fail()) // while the input is invalid...
+        {
+            std::cin.clear();                                                   // clear cache
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the value
+
+            std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): "; // ask player again for the value
+            std::cin >> tempyNumber;                                            // store player input
         }
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore the value
-        
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the value
+
         if (tempyNumber < 1 || tempyNumber > 10) // if the player input isn't between 1 and 10...
         {
             std::cout << "Must enter number between 1 and 10." << std::endl; // inform player of error
@@ -184,11 +184,15 @@ void Game::obtainShips() // game class function 'obtainShips'
                 {
                     std::cout << "Player 1 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
                     std::cin >> tempxLetter;
+
+                    // Input Check (1) :: if input is not single char
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
+                    // Input Check (2) :: if input is not in range
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
                     {
                         std::cout << "Must enter letter between A and J." << std::endl;
                     }
+
                 } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
 
                 /* Asking for Y Coordinate */
@@ -196,7 +200,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                 {
                     std::cout << "Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
-                    
+
                     while (std::cin.fail())
                     {
                         std::cin.clear();
@@ -206,7 +210,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                         std::cin >> tempyNumber;
                     }
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    
+
                     if (tempyNumber < 1 || tempyNumber > 10)
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -216,11 +220,20 @@ void Game::obtainShips() // game class function 'obtainShips'
                 // *need to add condition check if coord overlaps with prev ship coords*
                 if (j == 0) // when it is first time entering coordinate with multiple coord ship
                 {
-                    isValidCoord = true;
+                    if (isOverlapCoord(player1,tempxLetter, tempyNumber))
+                    {
+                        isValidCoord = false;
+                        std::cout << "[SYSTEM] - Coordinate overlapes with existing coordinate!" << std::endl;
+                        std::cout << "[SYSTEM] - Overlapping Coordinate : " << tempxLetter << ", " << tempyNumber << std::endl;
+                    }
+                    else
+                    {
+                        isValidCoord = true;
+                    }
                 }
                 else
                 {
-                    if (
+                    if ( // Input Check (4) :: Coord is next to previous coordinate (e.g. should not be A1, A3)
                         // if coordinates are not next to previous coordinates
                         ((abs((int)tempxLetter - prevX > 1)) || (abs(tempyNumber - prevY) > 1))
                         // if coordinates overlap with previous coord
@@ -228,12 +241,20 @@ void Game::obtainShips() // game class function 'obtainShips'
 
                     )
                     {
-                        std::cout << "Must enter a new coordinate that is next to your previous coordinate." << std::endl;
-                        std::cout << "Previous Coordinate : " << prevX << ", " << prevY << std::endl;
+                        std::cout << "[SYSTEM] - Must enter a new coordinate that is next to your previous coordinate." << std::endl;
+                        std::cout << "[SYSTEM] - Previous Coordinate : " << prevX << ", " << prevY << std::endl;
                     }
                     else
                     {
-                        isValidCoord = true;
+                        if (!isOverlapCoord(player1,tempxLetter, tempyNumber))
+                        {
+                            isValidCoord = true;
+                        }
+                        else
+                        {
+                            std::cout << "[SYSTEM] - Coordinate overlapes with existing coordinate!" << std::endl;
+                            std::cout << "[SYSTEM] - Overlapping Coordinate : " << tempxLetter << ", " << tempyNumber << std::endl;
+                        }
                     }
                 }
             } while (!isValidCoord);
@@ -260,7 +281,7 @@ void Game::obtainShips() // game class function 'obtainShips'
     {
         std::cout << "Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
         std::cin >> tempyNumber;
-        
+
         while (std::cin.fail())
         {
             std::cin.clear();
@@ -270,7 +291,7 @@ void Game::obtainShips() // game class function 'obtainShips'
             std::cin >> tempyNumber;
         }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        
+
         if (tempyNumber < 1 || tempyNumber > 10)
         {
             std::cout << "Must enter number between 1 and 10." << std::endl;
@@ -308,7 +329,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                 {
                     std::cout << "Player 2 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
                     std::cin >> tempyNumber;
-                    
+
                     while (std::cin.fail())
                     {
                         std::cin.clear();
@@ -323,17 +344,26 @@ void Game::obtainShips() // game class function 'obtainShips'
                     {
                         std::cout << "Must enter number between 1 and 10." << std::endl;
                     }
-                    
+
                 } while (tempyNumber < 1 || tempyNumber > 10);
 
                 // *need to add condition check if coord overlaps with prev ship coords*
                 if (j == 0) // when it is first time entering coordinate with multiple coord ship
                 {
-                    isValidCoord = true;
+                    if (isOverlapCoord(player2,tempxLetter, tempyNumber))
+                    {
+                        isValidCoord = false;
+                        std::cout << "[SYSTEM] - Coordinate overlapes with existing coordinate!" << std::endl;
+                        std::cout << "[SYSTEM] - Overlapping Coordinate : " << tempxLetter << ", " << tempyNumber << std::endl;
+                    }
+                    else
+                    {
+                        isValidCoord = true;
+                    }
                 }
                 else
                 {
-                    if (
+                    if ( // Input Check (4) :: Coord is next to previous coordinate (e.g. should not be A1, A3)
                         // if coordinates are not next to previous coordinates
                         ((abs((int)tempxLetter - prevX > 1)) || (abs(tempyNumber - prevY) > 1))
                         // if coordinates overlap with previous coord
@@ -341,12 +371,20 @@ void Game::obtainShips() // game class function 'obtainShips'
 
                     )
                     {
-                        std::cout << "Must enter a new coordinate that is next to your previous coordinate." << std::endl;
-                        std::cout << "Previous Coordinate : " << prevX << ", " << prevY << std::endl;
+                        std::cout << "[SYSTEM] - Must enter a new coordinate that is next to your previous coordinate." << std::endl;
+                        std::cout << "[SYSTEM] - Previous Coordinate : " << prevX << ", " << prevY << std::endl;
                     }
                     else
                     {
-                        isValidCoord = true;
+                        if (!isOverlapCoord(player2,tempxLetter, tempyNumber))
+                        {
+                            isValidCoord = true;
+                        }
+                        else
+                        {
+                            std::cout << "[SYSTEM] - Coordinate overlapes with existing coordinate!" << std::endl;
+                            std::cout << "[SYSTEM] - Overlapping Coordinate : " << tempxLetter << ", " << tempyNumber << std::endl;
+                        }
                     }
                 }
             } while (!isValidCoord);
@@ -355,9 +393,21 @@ void Game::obtainShips() // game class function 'obtainShips'
             player2->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
             player2->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
         }
-
-        // player2->addShip(i-1, tempShip);
     }
+}
+
+bool Game::isOverlapCoord(Player* thisPlayer, char xLetter, int yNumber)
+{
+    // Input Check (3) :: if input overlaps with coordinates of existing ship
+    for (int i = 0; i < shipAmount; i++) // for each ship
+    {
+        for (int j = 0; j < (i + 1); j++) // for each position of coordinates
+            if (thisPlayer->getShip(i)->getXCoord(j) == xLetter && thisPlayer->getShip(i)->getYCoord(j) == yNumber)
+            {
+                return true;
+            }
+    }
+    return false;
 }
 
 void Game::playerGuess()
@@ -383,7 +433,7 @@ void Game::playerGuess()
         {
             std::cout << "[ATTACK] Player 1 - enter Y coordinate (1-10): ";
             std::cin >> yGuess;
-            
+
             while (std::cin.fail())
             {
                 std::cin.clear();
@@ -397,7 +447,7 @@ void Game::playerGuess()
             {
                 std::cout << "Must enter number between 1 and 10\n";
             }
-            
+
         } while (yGuess < 1 || yGuess > 10);
         // std::cout << yGuess << '\n';
 
@@ -435,7 +485,7 @@ void Game::playerGuess()
             {
                 std::cout << "[ATTACK] Player 2 - enter Y coordinate (1-10): ";
                 std::cin >> yGuess;
-                
+
                 while (std::cin.fail())
                 {
                     std::cin.clear();
@@ -449,7 +499,7 @@ void Game::playerGuess()
                 {
                     std::cout << "Must enter number between 1 and 10\n";
                 }
-                
+
             } while (yGuess < 1 || yGuess > 10);
             // std::cout << yGuess << '\n';
 

@@ -29,10 +29,11 @@ void Player::addShip(int shipNumber, int coordIndex, char xCoord, int yCoord, in
 
 void Player::getShipInfo(int shipNumber, int coordIndex) //player class function 'getShipInfo' requests the shipNumber in the array and the coordinate index
 {
-    int x,y; //declares ints x and y
+    char x;
+    int y; 
     x = ships[shipNumber]->getXCoord(coordIndex); //sets int x to the x coordinate of the specified ship 
     y = ships[shipNumber]->getYCoord(coordIndex); //sets int y to the y coordinate of the specified ship
-    std::cout << "[DBG] Ship Index : " << shipNumber << ", Coord Index : " << coordIndex << " :: coord :: " << x << " , " << y << std::endl; //outputs the relevant information
+    std::cout << "[ADDED] Ship Number : " << shipNumber << ", Position : " << coordIndex << " at (" << x << " , " << y << ") has been added!" << std::endl; //outputs the relevant information
 }
 
 

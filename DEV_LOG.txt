@@ -2,7 +2,9 @@
 @yiwoduf
 
 [*MOD] - temporarily disabled input check 'numeric_limits' due to g++ linking error
-[FIX] - now display boards are clean up
+[FIX] - now display boards are cleaned up
+[ADD] - include<limits> in Game class
+[FIX] - now checks previous ships' coordinates before adding ship info
 
 02.12.22
 @yiwoduf

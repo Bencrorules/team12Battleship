@@ -13,6 +13,7 @@ public:
     void obtainShips(); //declares obtainShips function with public scope
     void playerGuess(); //declares playerGuess function with public scope 
     void labels(); //declares labels function with public scope
+    bool isOverlapCoord(Player* thisPlayer, char xLetter, int yNumber);
     void finishGame(int playerID); //declares finishGame function with public scope
     int row = 11; //declares an integer 'row' in public scope set to 11
     int col = 11; //declares an integer 'col' in public scope set to 11
