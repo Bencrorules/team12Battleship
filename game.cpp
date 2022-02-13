@@ -1,167 +1,164 @@
 #include <iostream>
 #include "game.h"
 
-Game::Game()
+Game::Game() //game constructor
 {
-    makeBoard();
+    makeBoard(); //calls maeBoard function
     // row = 11;
     // col = 11;
-    shipAmount = 0;
-    player1 = nullptr;
-    player2 = nullptr;
+    shipAmount = 0; //sets shipAmount to 0 for the start of a board
+    player1 = nullptr; //sets the player1 pointer to nullptr
+    player2 = nullptr; //sets the player2 pointer to nullptr
 }
 
-Game::~Game(){
-    for(int i =0; i<row; i++){
-        delete[] board[i];
+Game::~Game(){ //game destructor
+    for(int i =0; i<row; i++){ //runs for each row in the board
+        delete[] board[i]; //deletes the row at int i
     }
-    delete[] board;
-    delete player1;
-    delete player2;
+    delete[] board; //deletes the empty board
+    delete player1; //deletes the player1 pointer
+    delete player2; //deletes the player2 pointer
 
 
 }
 
-void Game::makeBoard()
+void Game::makeBoard() //game class function 'makeBoard' creates an int 2D array initialized to 0
 {
-    board = new int *[row];
-    for (int i = 0; i < row; i++)
+    board = new int *[row]; //sets board as a new array of ints
+    for (int i = 0; i < row; i++) //for each row of the board...
     {
-        board[i] = new int[col];
+        board[i] = new int[col]; //set the row of board at int i to have a columb effectively creating a 2d array
     }
 
-    for (int i = 0; i < row; i++)
+    for (int i = 0; i < row; i++) //for each row of the board...
     {
-        for (int j = 0; j < col; j++)
+        for (int j = 0; j < col; j++) //for each columb of the board...
         {
-            board[i][j] = 0;
+            board[i][j] = 0; //initialze value to 0
         }
     }
-    labels();
+    labels(); //call the labels function
 }
 
-void Game::labels()
+void Game::labels() //game class function 'labels' sets the values on the edges of the board to their coordinate representations
 {
-    int val = 0;
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            board[0][1] = 'A';
-            board[0][2] = 'B';
-            board[0][3] = 'C';
-            board[0][4] = 'D';
-            board[0][5] = 'E';
-            board[0][6] = 'F';
-            board[0][7] = 'G';
-            board[0][8] = 'H';
-            board[0][9] = 'I';
-            board[0][10] = 'J';
-            board[i][0] = val;
-        }
-        val++;
-    }
-    board[0][0] = '-';
-}
+    board[0][0] = '- '; //this line and the following 10 set the first row of the board to visually represent coordinates
+    board[0][1] = 'A';
+    board[0][2] = 'B';
+    board[0][3] = 'C';
+    board[0][4] = 'D';
+    board[0][5] = 'E';
+    board[0][6] = 'F';
+    board[0][7] = 'G';
+    board[0][8] = 'H';
+    board[0][9] = 'I';
+    board[0][10] = 'J';
 
-void Game::printBoard()
-{
-    for (int i = 0; i < 1; i++)
+    int val = 1; //initializes an int 'val' to 0. only within the scope of labels function
+    for (int i = 1; i < row; i++) //for each row of the board...
     {
-        for (int j = 0; j < row; j++)
-        {
-            std::cout << char(board[i][j]) << " ";
-        }
-    }
-    std::cout << '\n';
-    for (int i = 1; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            std::cout << board[i][j] << " ";
-        }
-        std::cout << '\n';
+        board[i][0] = val; //sets the first columb of the board to values 1-10
+        val++; //increases val by 1 each iteration of the for loop
     }
 }
 
-void Game::playGame()
+void Game::printBoard() //game class function 'printBoard' prints the board to the command line
 {
-    std::cout << "Welcome to Battleship!" << std::endl;
-    std::cout << "----------------------" << std::endl;
-    do
+    for (int i = 0; i < row; i++) //for each row of the board...
     {
-        std::cout << "Ship amount: ";
-        std::cin >> shipAmount;
-        while (std::cin.fail())
+        for (int j = 0; j < col; j++) //for each columb of the board...
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-            std::cout << "Ship amount: ";
-            std::cin >> shipAmount;
+            if(j==0 && 0<i && i<10) //if the coordinate is on the first columb and on row 1 through 9...
+            {
+                std::cout << board[i][j] << "  "; //print the board value with correct visual spacing
+            }
+            else
+            {
+                std::cout << board[i][j] << " "; //print the board value with correct visual spacing
+            }
         }
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        if (shipAmount < 1 || shipAmount > 5)
-        {
-            std::cout << "Ship amount must be between 1-5." << std::endl;
-        }
-    } while (shipAmount < 1 || shipAmount > 5);
-    player1 = new Player(shipAmount);
-    player2 = new Player(shipAmount);
-
-    obtainShips();
-    playerGuess();
+        std::cout << '\n'; //print new line
+    }
 }
 
-void Game::obtainShips()
+void Game::playGame() //game class function 'playGame' controls much of the game logic
 {
-    char tempxLetter;
-    int tempyNumber;
-    printBoard();
-    std::cout << std::endl;
+    std::cout << "Welcome to Battleship!" << std::endl; //prints out welcome message
+    std::cout << "----------------------" << std::endl; //prints out visual break 
+    do //loop at least once
+    {
+        std::cout << "Ship amount: "; //ask for ship amount
+        std::cin >> shipAmount; //store player entry to shipAmount variable
+        while (std::cin.fail()) //while input failed
+        {
+            std::cin.clear(); //clear the cache 
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad values
+
+            std::cout << "Ship amount: "; //ask again for the ship amount
+            std::cin >> shipAmount; //store player entry to shipAmount
+        }
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore bad values
+        if (shipAmount < 1 || shipAmount > 5) //if the shipAmount isn't 1-5...
+        {
+            std::cout << "Ship amount must be between 1-5." << std::endl; //tell player ship amount must be between 1-5
+        }
+    } while (shipAmount < 1 || shipAmount > 5); //loop if the shipAmount isn't between 1 and 5
+    player1 = new Player(shipAmount); //declares player1 as a new Player with the shipAmount
+    player2 = new Player(shipAmount); //declares player2 as a new Player with the shipAmount
+
+    obtainShips(); //calls the obtainShips function
+    playerGuess(); //calls the playerGuess function
+}
+
+void Game::obtainShips() //game class function 'obtainShips' 
+{
+    char tempxLetter; //declares char tempxLetter
+    int tempyNumber; //declares int tempyNumber
+    printBoard(); //prints the board
+    std::cout << std::endl; //creates a new line
     /* PLAYER 1 STARTS HERE */
-    do
+    do //loop at least once
     {
-        std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): ";
-        std::cin >> tempxLetter;
+        std::cout << "Player 1 - enter X coordinate for 1x1 ship (A-J): "; //ask player 1 for the x coordinate of their 1x1 ship
+        std::cin >> tempxLetter; //store player input to tempxLetter
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
         // std::cout << (char)tempxLetter << '\n';
-        if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
+        if ((int)tempxLetter < 65 || (int)tempxLetter > 74) //if unicode for the player input isn't between 65 and 74 (A-J)
         {
-            std::cout << "Must enter letter between A and J." << std::endl;
+            std::cout << "Must enter letter between A and J." << std::endl; //inform player of the error
         }
-    } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
-    do
+    } while ((int)tempxLetter < 65 || (int)tempxLetter > 74); //then loop again
+    do //loop at least once
     {
-        std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
-        std::cin >> tempyNumber;
-        while (std::cin.fail())
+        std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): "; //ask player for the y coordinate for their 1x1 ship
+        std::cin >> tempyNumber; //store player input
+        while (std::cin.fail()) //while the input is invalid...
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.clear(); //clear cache
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore the value
 
-            std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): ";
-            std::cin >> tempyNumber;
+            std::cout << "Player 1 - enter Y coordinate for 1x1 ship (1-10): "; //ask player again for the value
+            std::cin >> tempyNumber; //store player input
         }
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        if (tempyNumber < 1 || tempyNumber > 10)
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //ignore the value
+        if (tempyNumber < 1 || tempyNumber > 10) //if the player input isn't between 1 and 10...
         {
-            std::cout << "Must enter number between 1 and 10." << std::endl;
+            std::cout << "Must enter number between 1 and 10." << std::endl; //inform player of error
         }
-    } while (tempyNumber < 1 || tempyNumber > 10);
+    } while (tempyNumber < 1 || tempyNumber > 10); //loop if input isn't between 1 and 10
 
     player1->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player1->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
 
     /* Player 1 - Ship creation when shipAmount is more than 1 */
-    for (int i = 2; i <= shipAmount; i++)
+    for (int i = 2; i <= shipAmount; i++) //for the second ship and each one after...
     {
-        for (int j = 0; j < i; j++)
+        for (int j = 0; j < i; j++) //for each coordinate of the new ship...
         {
-            int prevX, prevY;
+            int prevX, prevY; //declare ints prevX and prevY
             /* Asking for X Coordinate */
-            bool isValidCoord = false;
+            bool isValidCoord = false; //declare bool isValidCoord initialized to false
 
             /* Check if coordinates are valid */
             do
