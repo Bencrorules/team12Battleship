@@ -69,20 +69,20 @@ bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shi
                 if (ships[i]->positionDown(j)) // if it is Red pin already
                 {
                     missed = true;
-                    std::cout << "[!] - Spot already down! : " << i << " Position: " << j << std::endl;
+                    std::cout << "[MISSED!] - Spot already down! : " << i << " Position: " << j << std::endl;
                 }
                 else
                 {
                     ships[i]->positionAttacked(j);                                                                  // sets the ships corresponding location to hit
-                    std::cout << "[HIT!] - hit successful! Ship Number : " << i << " Position: " << j << std::endl; // outputs relevant information to the player
+                    std::cout << "[HIT!] - hit to (" << xGuess << ", " << yGuess << ") was successful! Ship Number : " << i << " Position: " << j << std::endl; // outputs relevant information to the player
                 }
 
                 if (!missed)
                 {
                     int positionDownCount = 0;       // declares int 'positionDownCount' initialized to 0
-                    for (int k = 0; k < length; k++) // check if the attack kills the ship
+                    for (int k = 0; k < numberOfShips; k++) // check if the attack kills the ship
                     {
-                        if (ships[k]->positionDown(k)) // if the location on the ship was hit
+                        if (ships[i]->positionDown(k)) // if the location on the ship was hit
                         {
                             positionDownCount++;             // add one to positionDownCount
                             if (positionDownCount == length) // if the length of positionDownCount is equal to the length of the ship...
@@ -98,7 +98,7 @@ bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shi
             }
         }
     }
-    std::cout << "[DBG] - not updated" << std::endl; // informs the player no ship was hit
+    std::cout << "[MISSED!] - Your attack to (" << xGuess << ", " << yGuess << ") was missed!" << std::endl; // informs the player no ship was hit
     return false;                                    // returns false
 }
 

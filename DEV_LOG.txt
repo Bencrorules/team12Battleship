@@ -5,6 +5,9 @@
 [FIX] - now display boards are cleaned up
 [ADD] - include<limits> in Game class
 [FIX] - now checks previous ships' coordinates before adding ship info
+[ADD] - when hitting ship, checks if it is already hit and print message accordinly
+[FIX] - Player Class - positionDownCount not increasing correctly has been fixed
+        Now you can hit A,3 and A,2 for 1x2 ship and it will still killShip() correctly
 
 02.12.22
 @yiwoduf
