@@ -3,12 +3,12 @@
 
 Player::Player(int amountShips) // Player class constructor with the number of ships as an input
 {
-    ships = new Ship*[amountShips]; // declares an array of ship pointers equal to the number of ships
-    shipBoard = new int*[11];
+    ships = new Ship *[amountShips]; // declares an array of ship pointers equal to the number of ships
+    shipBoard = new int *[11];
     /* LEE - Initialize each ship size to avoid seg fault*/
     for (int i = 0; i < amountShips; i++) // for each ship...
     {
-        ships[i] = new Ship(i+1); // set the ship array value at i to a new instance of the ship class
+        ships[i] = new Ship(i + 1); // set the ship array value at i to a new instance of the ship class
     }
     for (int i = 0; i < 11; i++)
     {
@@ -33,11 +33,11 @@ Player::Player(int amountShips) // Player class constructor with the number of s
     shipBoard[0][9] = 'I';
     shipBoard[0][10] = 'J';
 
-    int val = 1;                  // initializes an int 'val' to 0. only within the scope of labels function
+    int val = 1;                 // initializes an int 'val' to 0. only within the scope of labels function
     for (int i = 1; i < 11; i++) // for each row of the board...
     {
         shipBoard[i][0] = val; // sets the first columb of the board to values 1-10
-        val++;             // increases val by 1 each iteration of the for loop
+        val++;                 // increases val by 1 each iteration of the for loop
     }
 
     numberOfShips = amountShips; // sets the int 'numerberOfShips' equal to the int 'amountShips'
@@ -45,17 +45,24 @@ Player::Player(int amountShips) // Player class constructor with the number of s
 
 Player::~Player()
 { // Player class destructor
-    for(int i=0; i< numberOfShips; i++){ // for each ship..
+    for (int i = 0; i < numberOfShips; i++)
+    {                    // for each ship..
         delete ships[i]; // delete the ship at i
     }
     delete[] ships; // delete the array of ships
+
+    for (int i = 0; i < 11; i++)
+    {                          // runs for each row in the board
+        delete[] shipBoard[i]; // deletes the row at int i
+    }
+    delete[] shipBoard; // deletes empty board
 }
 
 void Player::addShip(int shipNumber, int coordIndex, char xCoord, int yCoord, int shipSize)
 {
     ships[shipNumber]->setXCoord(coordIndex, xCoord);
     ships[shipNumber]->setYCoord(coordIndex, yCoord);
-    shipBoard[yCoord][(int)xCoord - 64] = shipNumber+1;
+    shipBoard[yCoord][(int)xCoord - 64] = shipNumber + 1;
 }
 
 void Player::getShipInfo(int shipNumber, int coordIndex) // player class function 'getShipInfo' requests the shipNumber in the array and the coordinate index
@@ -102,13 +109,13 @@ bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shi
                 }
                 else
                 {
-                    ships[i]->positionAttacked(j);                                                                  // sets the ships corresponding location to hit
+                    ships[i]->positionAttacked(j);                                                                                                              // sets the ships corresponding location to hit
                     std::cout << "[HIT!] - hit to (" << xGuess << ", " << yGuess << ") was successful! Ship Number : " << i << " Position: " << j << std::endl; // outputs relevant information to the player
                 }
 
                 if (!missed)
                 {
-                    int positionDownCount = 0;       // declares int 'positionDownCount' initialized to 0
+                    int positionDownCount = 0;              // declares int 'positionDownCount' initialized to 0
                     for (int k = 0; k < numberOfShips; k++) // check if the attack kills the ship
                     {
                         if (ships[i]->positionDown(k)) // if the location on the ship was hit
@@ -127,8 +134,9 @@ bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shi
             }
         }
     }
-    std::cout << "[MISSED!] - Your attack to (" << xGuess << ", " << yGuess << ") was missed! \n" << std::endl; // informs the player no ship was hit
-    return false;                                    // returns false
+    std::cout << "[MISSED!] - Your attack to (" << xGuess << ", " << yGuess << ") was missed! \n"
+              << std::endl; // informs the player no ship was hit
+    return false;           // returns false
 }
 
 bool Player::allShipDown() // player class function 'allShipDown' checks if each ship in the array of ship classes is killed and returns a bool
@@ -150,5 +158,4 @@ bool Player::allShipDown() // player class function 'allShipDown' checks if each
 
 void Player::printShipBoard()
 {
-
 }
