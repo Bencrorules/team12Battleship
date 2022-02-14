@@ -119,7 +119,7 @@ void Game::playGame() // game class function 'playGame' controls much of the gam
     } while (shipAmount < 1 || shipAmount > 5); // loop if the shipAmount isn't between 1 and 5
     player1 = new Player(shipAmount);           // declares player1 as a new Player with the shipAmount
     player2 = new Player(shipAmount);           // declares player2 as a new Player with the shipAmount
-
+    std::cout << std::endl;
     obtainShips(); // calls the obtainShips function
     playerGuess(); // calls the playerGuess function
 }
@@ -128,6 +128,8 @@ void Game::obtainShips() // game class function 'obtainShips'
 {
     char tempxLetter;       // declares char tempxLetter
     int tempyNumber;        // declares int tempyNumber
+    std::cout << "PLAYER 1 SHIP BOARD" << std::endl;
+    std::cout << "-------------------" << std::endl;
     printBoard();           // prints the board
     std::cout << std::endl; // creates a new line
 
@@ -168,6 +170,8 @@ void Game::obtainShips() // game class function 'obtainShips'
     player1->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player1->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
     std::cout << std::endl;
+    std::cout << "PLAYER 1 SHIP BOARD" << std::endl;
+    std::cout << "-------------------" << std::endl;
     player1->printShipBoard();
     std::cout << std::endl;
 
@@ -246,7 +250,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                     )
                     {
                         std::cout << "[SYSTEM] - Must enter a new coordinate that is next to your previous coordinate." << std::endl;
-                        std::cout << "[SYSTEM] - Previous Coordinate : " << prevX << ", " << prevY << std::endl;
+                        std::cout << "[SYSTEM] - Previous Coordinate : " << (char)prevX << ", " << prevY << std::endl;
                     }
                     else
                     {
@@ -267,13 +271,22 @@ void Game::obtainShips() // game class function 'obtainShips'
             player1->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
             player1->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
             std::cout << std::endl;
+            std::cout << "PLAYER 1 SHIP BOARD" << std::endl;
+            std::cout << "-------------------" << std::endl;
             player1->printShipBoard();
             std::cout << std::endl;
         }
     }
     std::cout << std::endl;
+    for (int i = 0; i < 100; i++)
+    {
+        std::cout << std::endl;
+    }
 
     /* PLAYER 2 STARTS HERE */
+    std::cout << "PLAYER 2 SHIP BOARD" << std::endl;
+    std::cout << "-------------------" << std::endl;
+    printBoard();
     do
     {
         std::cout << "[SETUP] Player 2 - enter X coordinate for 1x1 ship (A-J): ";
@@ -308,6 +321,8 @@ void Game::obtainShips() // game class function 'obtainShips'
     player2->addShip(0, 0, tempxLetter, tempyNumber, 1); // temp line - Lee
     player2->getShipInfo(0, 0);                          // temp line - Lee :: it seems like it is updating the information above function.
     std::cout << std::endl;
+    std::cout << "PLAYER 2 SHIP BOARD" << std::endl;
+    std::cout << "-------------------" << std::endl;
     player2->printShipBoard();
     std::cout << std::endl;
 
@@ -382,7 +397,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                     )
                     {
                         std::cout << "[SYSTEM] - Must enter a new coordinate that is next to your previous coordinate." << std::endl;
-                        std::cout << "[SYSTEM] - Previous Coordinate : " << prevX << ", " << prevY << std::endl;
+                        std::cout << "[SYSTEM] - Previous Coordinate : " << (char)prevX << ", " << prevY << std::endl;
                     }
                     else
                     {
@@ -403,9 +418,15 @@ void Game::obtainShips() // game class function 'obtainShips'
             player2->addShip(i - 1, j, tempxLetter, tempyNumber, i); // temp line - Lee
             player2->getShipInfo(i - 1, j);                          // temp line - Lee :: it seems like it is updating the information above function.
             std::cout << std::endl;
+            std::cout << "PLAYER 2 SHIP BOARD" << std::endl;
+            std::cout << "-------------------" << std::endl;
             player2->printShipBoard();
             std::cout << std::endl;
         }
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        std::cout << std::endl;
     }
 }
 
@@ -431,6 +452,14 @@ void Game::playerGuess()
     /* PLAYER 1 : Guessing Coordinates */
     while (!gameFinished)
     {
+        for (int i = 0; i < 100; i++)
+        {
+            std::cout << std::endl;
+        }
+        std::cout << "PLAYER 1 ATTACK BOARD (R=hit W=miss)" << std::endl;
+        std::cout << "------------------------------------" << std::endl;
+        player1->printAttackBoard();
+        std::cout << std::endl;
         do
         {
             std::cout << "[ATTACK] Player 1 - enter X coordinate (A-J): ";
@@ -468,7 +497,8 @@ void Game::playerGuess()
         if (player2->shipAttacked(xGuess, yGuess)) // handle player
         {
             // 65 is A, to make A number 1 index, -64
-            board[((int)xGuess) - 64][yGuess] = 'R'; // if it hits ship, update board coord to 'RED'
+            //player1->editAttackBoard((int)(xGuess - 64), yGuess, true); // if it hits ship, update board coord to 'RED'
+            (player1->getAttackBoard())[yGuess][(int)(xGuess-64)] = 'R';
             if (player2->allShipDown())
             {
                 finishGame(1);
@@ -476,12 +506,22 @@ void Game::playerGuess()
         }
         else
         {
-            board[((int)xGuess) - 64][yGuess] = 'W'; // if it didn't hit anything, update board coord to 'WHITE'
+            //player1->editAttackBoard((int)(xGuess - 64), yGuess, false); // if it didn't hit anything, update board coord to 'WHITE'
+            (player1->getAttackBoard())[yGuess][(int)(xGuess-64)] = 'W';
         }
         // printBoardP1();
 
         if (!gameFinished)
         {
+            sleep(3);
+            for (int i = 0; i < 100; i++)
+            {
+                std::cout << std::endl;
+            }
+            std::cout << "PLAYER 2 ATTACK BOARD (R=hit W=miss)" << std::endl;
+            std::cout << "------------------------------------" << std::endl;
+            player2->printAttackBoard();
+            std::cout << std::endl;
             /* PLAYER 2 : Guessing Coordinates */
             do
             {
@@ -520,7 +560,8 @@ void Game::playerGuess()
             if (player1->shipAttacked(xGuess, yGuess)) // handle player
             {
                 // 65 is A, to make A number 1 index, -64
-                board[((int)xGuess) - 64][yGuess] = 'R'; // if it hits ship, update board coord to 'RED'
+                //player2->editAttackBoard((int)(xGuess-64), yGuess, true);// if it hits ship, update board coord to 'RED'
+                (player2->getAttackBoard())[yGuess][(int)(xGuess-64)] = 'R';
                 if (player1->allShipDown())
                 {
                     finishGame(2);
@@ -528,10 +569,12 @@ void Game::playerGuess()
             }
             else
             {
-                board[((int)xGuess) - 64][yGuess] = 'W'; // if it didn't hit anything, update board coord to 'WHITE'
+                //player2->editAttackBoard((int)(xGuess-64), yGuess, false); // if it didn't hit anything, update board coord to 'WHITE'
+                (player2->getAttackBoard())[yGuess][(int)(xGuess-64)] = 'W';
             }
             // printBoardP2();
         }
+        sleep(3);
     }
 }
 

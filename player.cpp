@@ -5,6 +5,7 @@ Player::Player(int amountShips) // Player class constructor with the number of s
 {
     ships = new Ship *[amountShips]; // declares an array of ship pointers equal to the number of ships
     shipBoard = new int *[11];
+    attackBoard = new int*[11];
     /* LEE - Initialize each ship size to avoid seg fault*/
     for (int i = 0; i < amountShips; i++) // for each ship...
     {
@@ -13,12 +14,14 @@ Player::Player(int amountShips) // Player class constructor with the number of s
     for (int i = 0; i < 11; i++)
     {
         shipBoard[i] = new int[11];
+        attackBoard[i] = new int[11];
     }
     for (int i = 0; i < 11; i++)
     {
         for (int j = 0; j < 11; j++)
         {
             shipBoard[i][j] = 0;
+            attackBoard[i][j] = 0;
         }
     }
     shipBoard[0][0] = '-'; // this line and the following 10 set the first row of the board to visually represent coordinates
@@ -33,10 +36,23 @@ Player::Player(int amountShips) // Player class constructor with the number of s
     shipBoard[0][9] = 'I';
     shipBoard[0][10] = 'J';
 
+    attackBoard[0][0] = '-'; // this line and the following 10 set the first row of the board to visually represent coordinates
+    attackBoard[0][1] = 'A';
+    attackBoard[0][2] = 'B';
+    attackBoard[0][3] = 'C';
+    attackBoard[0][4] = 'D';
+    attackBoard[0][5] = 'E';
+    attackBoard[0][6] = 'F';
+    attackBoard[0][7] = 'G';
+    attackBoard[0][8] = 'H';
+    attackBoard[0][9] = 'I';
+    attackBoard[0][10] = 'J';
+
     int val = 1;                 // initializes an int 'val' to 0. only within the scope of labels function
     for (int i = 1; i < 11; i++) // for each row of the board...
     {
         shipBoard[i][0] = val; // sets the first columb of the board to values 1-10
+        attackBoard[i][0] = val;
         val++;                 // increases val by 1 each iteration of the for loop
     }
 
@@ -56,6 +72,12 @@ Player::~Player()
         delete[] shipBoard[i]; // deletes the row at int i
     }
     delete[] shipBoard; // deletes empty board
+
+    for (int i = 0; i < 11; i++)
+    {                          // runs for each row in the board
+        delete[] attackBoard[i]; // deletes the row at int i
+    }
+    delete[] attackBoard; // deletes empty board
 }
 
 void Player::addShip(int shipNumber, int coordIndex, char xCoord, int yCoord, int shipSize)
@@ -110,7 +132,7 @@ bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shi
                 else
                 {
                     ships[i]->positionAttacked(j);                                                                                                              // sets the ships corresponding location to hit
-                    std::cout << "[HIT!] - hit to (" << xGuess << ", " << yGuess << ") was successful! Ship Number : " << i << " Position: " << j << std::endl; // outputs relevant information to the player
+                    std::cout << "[HIT!] - hit to (" << xGuess << ", " << yGuess << ") was successful!" << std::endl; // outputs relevant information to the player
                 }
 
                 if (!missed)
@@ -158,4 +180,77 @@ bool Player::allShipDown() // player class function 'allShipDown' checks if each
 
 void Player::printShipBoard()
 {
+    for (int i = 0; i < 11; i++) // for each row of the board...
+    {
+        for (int j = 0; j < 11; j++) // for each columb of the board...
+        {
+            if (j == 0 && 0 < i && i < 10) // if the coordinate is on the first columb and on row 1 through 9...
+            {
+                std::cout << shipBoard[i][j] << "  "; // print the board value with correct visual spacing
+            }
+            else
+            {
+                if ((int)shipBoard[i][j] > 10)
+                {
+                    std::cout << (char)shipBoard[i][j] << " ";
+                    if (i == 0 && j == 0) // if '-'
+                    {
+                        std::cout << " ";
+                    }
+                }
+                else
+                {
+                    std::cout << shipBoard[i][j] << " ";
+                }
+            }
+        }
+        std::cout << '\n'; // print new line
+    }
+}
+
+void Player::printAttackBoard()
+{
+    for (int i = 0; i < 11; i++) // for each row of the board...
+    {
+        for (int j = 0; j < 11; j++) // for each columb of the board...
+        {
+            if (j == 0 && 0 < i && i < 10) // if the coordinate is on the first columb and on row 1 through 9...
+            {
+                std::cout << attackBoard[i][j] << "  "; // print the board value with correct visual spacing
+            }
+            else
+            {
+                if ((int)attackBoard[i][j] > 10)
+                {
+                    std::cout << (char)attackBoard[i][j] << " ";
+                    if (i == 0 && j == 0) // if '-'
+                    {
+                        std::cout << " ";
+                    }
+                }
+                else
+                {
+                    std::cout << attackBoard[i][j] << " ";
+                }
+            }
+        }
+        std::cout << '\n'; // print new line
+    }
+}
+
+void Player::editAttackBoard(char xCoord, int yCoord, bool hit)
+{
+    if (hit == true)
+    {
+        attackBoard[yCoord][(int)(xCoord-64)] = 'R';
+    }
+    else
+    {
+        attackBoard[yCoord][(int)(xCoord-64)] = 'W';
+    }
+}
+
+int** Player::getAttackBoard()
+{
+    return attackBoard;
 }

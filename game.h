@@ -1,6 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 #include "player.h"
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 
 class Game
 {
@@ -11,7 +16,7 @@ public:
     void makeBoard(); //declares makeBoard function with public scope
     void printBoard(); //declares printBoard function with public scope
     void obtainShips(); //declares obtainShips function with public scope
-    void playerGuess(); //declares playerGuess function with public scope 
+    void playerGuess(); //declares playerGuess function with public scope
     void labels(); //declares labels function with public scope
     bool isOverlapCoord(Player* thisPlayer, char xLetter, int yNumber);
     void finishGame(int playerID); //declares finishGame function with public scope
