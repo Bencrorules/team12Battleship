@@ -134,7 +134,7 @@ void Game::obtainShips() // game class function 'obtainShips'
     /* PLAYER 1 STARTS HERE */
     do // loop at least once
     {
-        std::cout << "[SETUP] Player 1 - enter X coordinate for 1x1 ship (A-J): "; // ask player 1 for the x coordinate of their 1x1 ship
+        std::cout << "[SETUP] Player 1 - enter X coordinate for [1x1] ship (A-J): "; // ask player 1 for the x coordinate of their 1x1 ship
         std::cin >> tempxLetter;                                           // store player input to tempxLetter
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
@@ -146,7 +146,7 @@ void Game::obtainShips() // game class function 'obtainShips'
     } while ((int)tempxLetter < 65 || (int)tempxLetter > 74); // then loop again
     do                                                        // loop at least once
     {
-        std::cout << "[SETUP] Player 1 - enter Y coordinate for 1x1 ship (1-10): "; // ask player for the y coordinate for their 1x1 ship
+        std::cout << "[SETUP] Player 1 - enter Y coordinate for [1x1] ship (1-10): "; // ask player for the y coordinate for their 1x1 ship
         std::cin >> tempyNumber;                                            // store player input
 
         while (std::cin.fail()) // while the input is invalid...
@@ -186,7 +186,7 @@ void Game::obtainShips() // game class function 'obtainShips'
             {
                 do // need to block entering coordinate that is not valid
                 {
-                    std::cout << "[SETUP] Player 1 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
+                    std::cout << "[SETUP] Player 1 - enter X coordinate " << (j + 1) << " for [1x" << i << "] ship (A-J): ";
                     std::cin >> tempxLetter;
 
                     // Input Check (1) :: if input is not single char
@@ -202,7 +202,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                 /* Asking for Y Coordinate */
                 do
                 {
-                    std::cout << "[SETUP] Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                    std::cout << "[SETUP] Player 1 - enter Y coordinate " << (j + 1) << " for [1x" << i << "] ship (1-10): ";
                     std::cin >> tempyNumber;
 
                     while (std::cin.fail())
@@ -210,7 +210,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                         std::cin.clear();
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                        std::cout << "[SETUP] Player 1 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                        std::cout << "[SETUP] Player 1 - enter Y coordinate " << (j + 1) << " for [1x" << i << "] ship (1-10): ";
                         std::cin >> tempyNumber;
                     }
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -286,7 +286,7 @@ void Game::obtainShips() // game class function 'obtainShips'
     } while ((int)tempxLetter < 65 || (int)tempxLetter > 74);
     do
     {
-        std::cout << "[SETUP] Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
+        std::cout << "[SETUP] Player 2 - enter Y coordinate for [1x1] ship (1-10): ";
         std::cin >> tempyNumber;
 
         while (std::cin.fail())
@@ -294,7 +294,7 @@ void Game::obtainShips() // game class function 'obtainShips'
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            std::cout << "[SETUP] Player 2 - enter Y coordinate for 1x1 ship (1-10): ";
+            std::cout << "[SETUP] Player 2 - enter Y coordinate for [1x1] ship (1-10): ";
             std::cin >> tempyNumber;
         }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -325,7 +325,7 @@ void Game::obtainShips() // game class function 'obtainShips'
 
                 do // need to block entering coordinate that is not valid
                 {
-                    std::cout << "[SETUP] Player 2 - enter X coordinate " << (j + 1) << " for 1x" << i << " ship (A-J): ";
+                    std::cout << "[SETUP] Player 2 - enter X coordinate " << (j + 1) << " [for 1x" << i << "] ship (A-J): ";
                     std::cin >> tempxLetter;
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // if double input such as AA, will only take A as input
                     if ((int)tempxLetter < 65 || (int)tempxLetter > 74)
@@ -337,7 +337,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                 /* Asking for Y Coordinate */
                 do
                 {
-                    std::cout << "[SETUP] Player 2 - enter Y coordinate " << (j + 1) << " for 1x" << i << " ship (1-10): ";
+                    std::cout << "[SETUP] Player 2 - enter Y coordinate " << (j + 1) << " for [1x" << i << "] ship (1-10): ";
                     std::cin >> tempyNumber;
 
                     while (std::cin.fail())
@@ -345,7 +345,7 @@ void Game::obtainShips() // game class function 'obtainShips'
                         std::cin.clear();
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-                        std::cout << "[SETUP] Player 2 - enter Y coordinate " << (j + 1) << " for 1x " << i << " ship (1-10): ";
+                        std::cout << "[SETUP] Player 2 - enter Y coordinate " << (j + 1) << " for [1x" << i << "] ship (1-10): ";
                         std::cin >> tempyNumber;
                     }
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
