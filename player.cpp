@@ -127,7 +127,7 @@ bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shi
             }
         }
     }
-    std::cout << "[MISSED!] - Your attack to (" << xGuess << ", " << yGuess << ") was missed!" << std::endl; // informs the player no ship was hit
+    std::cout << "[MISSED!] - Your attack to (" << xGuess << ", " << yGuess << ") was missed! \n" << std::endl; // informs the player no ship was hit
     return false;                                    // returns false
 }
 
@@ -150,5 +150,5 @@ bool Player::allShipDown() // player class function 'allShipDown' checks if each
 
 void Player::printShipBoard()
 {
-    
+
 }
