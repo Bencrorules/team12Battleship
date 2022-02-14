@@ -17,11 +17,10 @@ class Ship
     bool positionDown(int spotNumber); //bool function returns true if the given length spot is hit
     void killShip(); //void function to set the ship as killed
 
-
     private:
-    int shipLength; //int for the ships length
-    int** shipCoords; //2D array of ints for ship coords
-    bool* spotsHit; //array of bools for spots hit
-    bool sank; //bool for ship sunk
+    int shipLength; // int for the ships length
+    int** shipCoords; // 2D array of ints for ship coords
+    bool* spotsHit; // array of bools for spots hit
+    bool sank; // bool for ship sunk
 };
 #endif

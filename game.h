@@ -23,6 +23,6 @@ public:
     Player *player2; //creates a player2 pointer in the public scope
 
 private:
-    int **board; //declares an int 'board' in the private scope
+    int **board; // declares an int 'board' in the private scope
 };
 #endif

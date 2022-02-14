@@ -3,12 +3,41 @@
 
 Player::Player(int amountShips) // Player class constructor with the number of ships as an input
 {
-    ships = new Ship *[amountShips]; // declares an array of ship pointers equal to the number of ships
-
+    ships = new Ship*[amountShips]; // declares an array of ship pointers equal to the number of ships
+    shipBoard = new int*[11];
     /* LEE - Initialize each ship size to avoid seg fault*/
     for (int i = 0; i < amountShips; i++) // for each ship...
     {
-        ships[i] = new Ship(i + 1); // set the ship array value at i to a new instance of the ship class
+        ships[i] = new Ship(i+1); // set the ship array value at i to a new instance of the ship class
+    }
+    for (int i = 0; i < 11; i++)
+    {
+        shipBoard[i] = new int[11];
+    }
+    for (int i = 0; i < 11; i++)
+    {
+        for (int j = 0; j < 11; j++)
+        {
+            shipBoard[i][j] = 0;
+        }
+    }
+    shipBoard[0][0] = '-'; // this line and the following 10 set the first row of the board to visually represent coordinates
+    shipBoard[0][1] = 'A';
+    shipBoard[0][2] = 'B';
+    shipBoard[0][3] = 'C';
+    shipBoard[0][4] = 'D';
+    shipBoard[0][5] = 'E';
+    shipBoard[0][6] = 'F';
+    shipBoard[0][7] = 'G';
+    shipBoard[0][8] = 'H';
+    shipBoard[0][9] = 'I';
+    shipBoard[0][10] = 'J';
+
+    int val = 1;                  // initializes an int 'val' to 0. only within the scope of labels function
+    for (int i = 1; i < 11; i++) // for each row of the board...
+    {
+        shipBoard[i][0] = val; // sets the first columb of the board to values 1-10
+        val++;             // increases val by 1 each iteration of the for loop
     }
 
     numberOfShips = amountShips; // sets the int 'numerberOfShips' equal to the int 'amountShips'
@@ -16,8 +45,7 @@ Player::Player(int amountShips) // Player class constructor with the number of s
 
 Player::~Player()
 { // Player class destructor
-    for (int i = 0; i < numberOfShips; i++)
-    {                    // for each ship..
+    for(int i=0; i< numberOfShips; i++){ // for each ship..
         delete ships[i]; // delete the ship at i
     }
     delete[] ships; // delete the array of ships
@@ -27,6 +55,7 @@ void Player::addShip(int shipNumber, int coordIndex, char xCoord, int yCoord, in
 {
     ships[shipNumber]->setXCoord(coordIndex, xCoord);
     ships[shipNumber]->setYCoord(coordIndex, yCoord);
+    shipBoard[yCoord][(int)xCoord - 64] = shipNumber+1;
 }
 
 void Player::getShipInfo(int shipNumber, int coordIndex) // player class function 'getShipInfo' requests the shipNumber in the array and the coordinate index
@@ -55,11 +84,11 @@ Ship *Player::getShip(int shipNumber) // player class function 'getShip' returns
 
 bool Player::shipAttacked(char xGuess, int yGuess) // player class function 'shipAttacked' returns true if the given coordinates match the given coordinates of the ship
 {
-    for (int i = 0; i < numberOfShips; i++) // by ship index
+    for (int i = 0; i < numberOfShips; i++) //  by ship index
     {
         int length = ships[i]->getShipLength(); // declares int 'length' and initializes with the value of the length of ship i
 
-        for (int j = 0; j < length; j++) // by coord index
+        for (int j = 0; j < length; j++) //  by coord index
         {
             int xCoord = ships[i]->getXCoord(j);               // declares int 'xCoord' and initializes with the value of ship i x coordinate
             int yCoord = ships[i]->getYCoord(j);               // declares int 'yCoord' and initializes with the value of ship i y coordinate
